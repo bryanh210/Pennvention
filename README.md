@@ -8,6 +8,6 @@
 - ```node_modules\.bin\sequelize model:create --name User --attributes username:string, hash:string```
 - ```node_modules\.bin\sequelize db:migrate```
 - ```node_modules\.bin\sequelize db:migrate:undo```
-- ```node_modules\.bin\sequelize help:migration:create```
+- ```node_modules\.bin\sequelize migration:create --name [new-migration]```
 #### Mac: 
 - change all the above commands with a / instead of a \
