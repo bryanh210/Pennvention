@@ -3,12 +3,11 @@
 
 ## Dev notes:
 #### Windows: 
-- to get postgres remote command line to heroku: ```set PATH=%PATH%;C:\Program Files\PostgreSQL\9.6\bin\```
-- ```heroku pg:psql``` to connect to the heroku remote postgres instance
-- ```node_modules\.bin\sequelize model:create --name User --attributes username:string, hash:string``` to create a new model
-- ```node_modules\.bin\sequelize db:migrate``` to run all migrations that haven't been run yet
-- ```node_modules\.bin\sequelize db:migrate:undo``` undo last migration
-- ```node_modules\.bin\sequelize db:migrate:undo``` undo last migration
-- ```node_modules\.bin\sequelize help:migration:create``` create new migration
+- ```set PATH=%PATH%;C:\Program Files\PostgreSQL\9.6\bin\```
+- ```heroku pg:psql```
+- ```node_modules\.bin\sequelize model:create --name User --attributes username:string, hash:string```
+- ```node_modules\.bin\sequelize db:migrate```
+- ```node_modules\.bin\sequelize db:migrate:undo```
+- ```node_modules\.bin\sequelize help:migration:create```
 #### Mac: 
 - change all the above commands with a / instead of a \
