@@ -1,9 +1,11 @@
 Admins and users should be able to see this
+<br/>
 
+<h1>Users List:</h1>
 {{#each users}}
 	{{this.id}}
-	{{this.username}}
-	{{this.createdAt}}
-	{{this.updatedAt}}
+	{{this.email}}
+	{{this.salt}}
+	{{this.hash}}
 	<br/>
 {{/each}}

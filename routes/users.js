@@ -1,36 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 var models = require('../models');
 var bcrypt = require('bcrypt');
+var flash = require('connect-flash');
 
-/*
-	MUST BE LOGGED IN AFTER THIS POINT
-*/
-
-// var isAuthenticated = function(req, res, next) {
-//   if (req.isAuthenticated())
-//     return next()
-//   req.flash('error', 'You have to be logged in to access the page.')
-//   res.redirect('/')
-// }
-
-// var isJudge = function(req, res, next) {
-//   if (req.isAuthenticated())
-//     return next()
-//   req.flash('error', 'You do not have the necessary permissions.')
-//   res.redirect('/')
-// }
-
-// function ensureOnlyCompany(req, res, next) {
-//   if (isCompany(req.user)) {
-//     return next();
-//   }
-//   res.redirect('/login')
-// }
-
-// app.get('/company/page', ensureOnlyCompany, function(req, res) {
-//   // serve the company page
-// });
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -48,10 +22,26 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.post('/', function(req, res){
-  var username = req.body.username;
+// users/login
+
+router.get('/login', function(req, res) {
+  res.render('users/login', {
+  });
+});
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/users',
+  failureRedirect: '/users/login',
+  failureFlash: true
+}));
+
+// users
+
+router.post('/', function(req, res) {
+
+  var email = req.body.email;
   var password = req.body.password;
-  if (!username || !password){
+  if (!email || !password) {
     req.flash('error', "Please fill in all the fields.");
     res.redirect('/signup');
   }
@@ -59,17 +49,25 @@ router.post('/', function(req, res){
   var salt = bcrypt.genSaltSync(10);
   var hashedPassword = bcrypt.hashSync(password, salt)
 
-  models.User.create({
-    username: username,
-    salt: salt,
-    password: hashedPassword
-  }).then(function(){
-    res.redirect('/');
-  }).catch(function(error){
-    //user already exists
-    console.log(error);
-    req.flash('error', "That username is already taken. Please choose another username.");
-  });
+  models.User
+    .findOrCreate({
+      where: {
+        email: email
+      },
+      defaults: {
+        salt: salt,
+        hash: hashedPassword
+      }
+    })
+    .spread(function(user, created) {
+      console.log(user.get({
+        plain: true
+      }));
+      console.log(created);
+      if (!created) {
+        req.flash('error', "That username is already taken.");
+      }
+    });
 });
 
 router.put('/', function(req, res, next) {});

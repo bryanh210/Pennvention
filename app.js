@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
+
 var auth = require('./routes/auth');
 var bcrypt = require('bcrypt');
 
@@ -39,6 +41,8 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(flash());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -48,10 +52,11 @@ app.use('/users', users);
 
 //multiple LocalStrategies for Users, Mentors, Judges and Admins
 
-passport.use(new LocalStrategy(function(username, password, done) {
+passport.use(new LocalStrategy(function(email, password, done) {
+  console.log("Using LocalStrategy");
   model.User.findOne({
     where: {
-      'username': username
+      'email': email
     }
   }).then(function(user) {
     if (user == null) {
@@ -60,10 +65,13 @@ passport.use(new LocalStrategy(function(username, password, done) {
       })
     }
 
-    var hashedPassword = bcrypt.hashSync(password, user.salt)
+    var hashedPassword = bcrypt.hashSync(password, user.salt);
 
-    if (user.password === hashedPassword) {
+    if (user.hash === hashedPassword) {
+      console.log("correct password, logging in");
       return done(null, user)
+    } else {
+      console.log("incorrect password");
     }
 
     return done(null, false, {
@@ -74,12 +82,16 @@ passport.use(new LocalStrategy(function(username, password, done) {
 
 
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  models.User.findById(id, function(err, user) {
-    done(err, user);
+  model.User.findById(id).then(function (user) {
+    console.log(user);
+    if (user == null) {
+      done(new Error('Wrong user id.'))
+    }
+    done(null, user)
   });
 });
 

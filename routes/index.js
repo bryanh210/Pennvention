@@ -23,7 +23,7 @@ var models = require('../models');
 
 router.get('/', function(req, res) {
   models.User.findAll({
-    include: [models.Task]
+    // include: [models.Task]
   }).then(function(users) {
     console.log(users);
     res.render('index', {

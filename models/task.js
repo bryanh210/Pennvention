@@ -5,13 +5,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        //associations can be defined here
-        Task.belongsTo(models.User, {
-          onDelete: "CASCADE",
-          foreignKey: {
-            allowNull: false
-          }
-        });
+        // associations can be defined here
       }
     }
   });
