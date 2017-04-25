@@ -13,8 +13,26 @@ var auth = require('./routes/auth');
 var bcrypt = require('bcrypt');
 
 var model = require('./models');
-var index = require('./routes/index');
-var users = require('./routes/users');
+
+// Connect routes for different user types.
+var routes = require('./routes/index');
+var auth = require('./routes/auth');
+var admin = require('./routes/admin');
+var judge = require('./routes/judge');
+var mentor = require('./routes/mentor');
+var student = require('./routes/student');
+
+// Connect routes to access and modify database.
+var APIjudges = require('./routes/API/judges')
+var APImentors = require('./routes/API/mentors')
+var APIscoreAndRubric = require('./routes/API/scoreAndRubric')
+var APIsponsorAwards = require('./routes/API/sponsorAwards')
+var APIstageDetails = require('./routes/API/stageDetails')
+var APIstudents = require('./routes/API/students')
+var APIteamJudge = require('./routes/API/teamJudge')
+var APIteamMentor = require('./routes/API/teamMentor')
+var APIteams = require('./routes/API/teams')
+var APItechAwards = require('./routes/API/techAwards')
 
 var app = express();
 
@@ -95,11 +113,25 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+// Mount middleware to access user pages.
+app.use('/', routes);
+app.use('/', auth(passport));
+app.use('/', admin);
+app.use('/', judge);
+app.use('/', mentor);
+app.use('/', student);
 
-
-
-
-
+// Mount middleware to access API calls to databasel.
+app.use('/', APIjudges);
+app.use('/', APImentors);
+app.use('/', APIscoreAndRubric);
+app.use('/', APIsponsorAwards);
+app.use('/', APIstageDetails);
+app.use('/', APIstudents);
+app.use('/', APIteamJudge);
+app.use('/', APIteamMentor);
+app.use('/', APIteams);
+app.use('/', APItechAwards);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

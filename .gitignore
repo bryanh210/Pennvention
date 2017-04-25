@@ -57,4 +57,13 @@ typings/
 # dotenv environment variables file
 .env
 
+dev.markdown
+.env
+npm-debug.log
+.tmp
+.DS_Store
+.idea/
+*.swp
+connect.js
+env.sh
 config/
