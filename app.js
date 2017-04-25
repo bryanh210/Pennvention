@@ -40,6 +40,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// handlebars setup
+var exphbs = require('express-handlebars');
+app.engine('.hbs', exphbs({
+  extname: '.hbs'
+}));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -62,10 +68,6 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', index);
-app.use('/users', users);
-
 
 
 //multiple LocalStrategies for Users, Mentors, Judges and Admins
