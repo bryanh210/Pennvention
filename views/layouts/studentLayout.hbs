@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Latest compiled JavaScript -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/stylesheets/mentor/mentorLayoutStyle.css">
+  <link rel='stylesheet' href='/stylesheets/mentor/mentorEditStyle.css' />
+  <link rel='stylesheet' href='/stylesheets/mentor/mentorFormStyle.css' />
+  <link rel='stylesheet' href='/stylesheets/mentor/mentorTeamStyle.css' />
+  <link href="/stylesheets/userstyle.css" rel="stylesheet">
+
+  <script>
+  $(document).ready(function(){
+    $("#search").click(function(){
+      $(".textarea").show();
+    });
+  });
+  </script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/"><i><span id="pv-title">PENN</span><span id="pv-title-white">VENTION</span></i></a>
+            </div><!-- .navbar-header -->
+            <div id="bs-navbar">
+              <ul class="nav navbar-nav hidden-sm hidden-xs">
+                <li><a href="profile">Edit Profile</a></li>
+                <li><a href="team">Team</a></li>
+                <li><a href="teamEdit">Edit Team</a></li>
+                <li><a href="mentor">Mentors</a></li>
+                <li id="signOut"><a href="http://pennvention.io/">Sign Out</a></li>
+              </ul>
+            </div>
+          <!--   <div  class="collapse navbar-collapse navbar-form" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+              </ul>
+              <form class="navbar-form navbar-right" action="/signin" method=get>
+              <div>
+                <li><a href="#login">Login</a></li>
+              </div>
+              </form>
+              <form class="navbar-form navbar-right" action="/register" method=get>
+              <div>
+                <li><a href="#login">Register</a></li>
+              </div>
+              </form> -->
+              <!-- <form>
+                <div class="social">
+                  <a href="https://facebook.com/pennvention"><i class="fa fa-facebook fa-lg"></i></a>
+                  &nbsp;
+                  <a href="https://twitter.com/pennvention"><i class="fa fa-twitter fa-lg"></i></a>
+                </div>
+                </form> -->
+            </div><!-- /.navbar-collapse -->
+          </div>
+        </div>
+      </nav>
+    </header>
+      <div class="container">
+        {{{body}}}
+      </div>
+      <!-- jQuery -->
+      <script src="/vendors/jquery/dist/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+      <!-- Autosize -->
+      <script src="/vendors/autosize/dist/autosize.min.js"></script>
+      <!-- jQuery autocomplete -->
+      <script src="/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+      <!-- starrr -->
+      <script src="/vendors/starrr/dist/starrr.js"></script>
+      <!-- Datatables -->
+      <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+      <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+      <!-- <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+      <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+      <script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+      <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+      <script src="/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+      <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+      <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+      <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+      <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script> -->
+
+      <!-- Custom Theme Scripts -->
+      <script src="/scripts/adminLayoutScript.js"></script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="/scripts/script.js"></script>
+
+
+</body>
+</html>

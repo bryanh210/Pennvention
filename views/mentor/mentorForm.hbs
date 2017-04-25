@@ -1,0 +1,59 @@
+<link rel='stylesheet' href='stylesheets/mentor/mentorFormStyle.css' />
+  <div class="row form">
+    <div class="col-md-12">
+      <h4>Confirmation Status: {{InProgress}}</h4>
+    </div>
+    <div class="col-md-12">
+      <div class="col-sm-8 col-sm-offset-2">
+        <!--   panel body -->
+        <div class="panel panel-default" id="mentor-form">
+          <div class="panel-body" >
+            <!--       start form -->
+            <form class="form-horizontal" action="/register" method="post">
+              <!--               first name -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">First Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
+                </div>
+              </div>
+              <!--         last name -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+                </div>
+              </div>
+              <!--         Phone Number -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Phone Number</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="(911)-911-9111" name="password" required>
+                </div>
+              </div>
+              <!--         Skype ID -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Skype</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="Skype ID" name="passwordRepeat" required>
+                </div>
+              </div>
+
+              <!--         bio -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Biography</label>
+                <div class="col-sm-9">
+                  <textarea class="form-control" name="bio" placeholder="Biography"></textarea>
+                </div>
+              </div>
+              <!--               submit -->
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+            <!--           form end -->
+          </div>
+        </div>
+        <!--       panel end -->
+      </div>
+    </div>
