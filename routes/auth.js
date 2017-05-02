@@ -8,7 +8,9 @@ var passport = require('passport');
 var config = require('../config.js');
 var LocalStrategy = require('passport-local').Strategy;
 
-var callbackURL = "localhost:3000" || config.DATABASE_URL || "localhost:3000"
+// var $ = require('jquery');
+var fetch = require('node-fetch');
+var callbackURL = "http://localhost:3000" || config.DATABASE_URL || "http://localhost:3000"
 
 module.exports = function(passport) {
 
@@ -59,6 +61,22 @@ module.exports = function(passport) {
 
     console.log(email, role, salt, hashedPassword)
 
+    // var dataObj = {
+    //   email: email,
+    //   salt: salt,
+    //   hashedPassword,
+    //   role: role
+    // }
+    //
+    // $.ajax({
+    //   url: callbackURL + '/api/v1/user',
+    //   method: 'POST',
+    //   data: dataObj,
+    //   success: function(data) {
+    //     console.log(data);
+    //   }
+    // });
+
     fetch(callbackURL + '/api/v1/user', {
       method: 'POST',
       headers: {
@@ -84,6 +102,7 @@ module.exports = function(passport) {
     .catch((err) => {
       console.log('error', err)
     });
+
     // models.User
     //   .findOrCreate({
     //     where: {
