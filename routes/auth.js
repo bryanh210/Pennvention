@@ -8,7 +8,6 @@ var passport = require('passport');
 var config = require('../config.js');
 var LocalStrategy = require('passport-local').Strategy;
 
-// var $ = require('jquery');
 var fetch = require('node-fetch');
 var callbackURL = "http://localhost:3000" || config.DATABASE_URL || "http://localhost:3000"
 
@@ -59,24 +58,6 @@ module.exports = function(passport) {
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt)
 
-    console.log(email, role, salt, hashedPassword)
-
-    // var dataObj = {
-    //   email: email,
-    //   salt: salt,
-    //   hashedPassword,
-    //   role: role
-    // }
-    //
-    // $.ajax({
-    //   url: callbackURL + '/api/v1/user',
-    //   method: 'POST',
-    //   data: dataObj,
-    //   success: function(data) {
-    //     console.log(data);
-    //   }
-    // });
-
     fetch(callbackURL + '/api/v1/user', {
       method: 'POST',
       headers: {
@@ -101,28 +82,8 @@ module.exports = function(passport) {
     })
     .catch((err) => {
       console.log('error', err)
-    });
-
-    // models.User
-    //   .findOrCreate({
-    //     where: {
-    //       email: email
-    //     },
-    //     defaults: {
-    //       salt: salt,
-    //       hash: hashedPassword
-    //     }
-    //   })
-    //   .spread(function(user, created) {
-    //     console.log(user.get({
-    //       plain: true
-    //     }));
-    //     console.log(created);
-    //     if (!created) {
-    //       req.flash('error', "That username is already taken.");
-    //     }
-    //   });
-    });
+    })
+  });
 
   return router;
 };
