@@ -13,7 +13,7 @@ var auth = require('./routes/auth');
 var bcrypt = require('bcrypt');
 
 var model = require('./models');
-var config = require('./config/config.js');
+var config = require('./config.js');
 
 // Connect routes for different user types.
 var routes = require('./routes/index');

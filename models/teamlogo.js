@@ -5,7 +5,12 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        TeamLogo.belongsTo(models.Team)
+        TeamLogo.belongsTo(models.Team, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        })
       }
     }
   });

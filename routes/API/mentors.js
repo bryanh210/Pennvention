@@ -109,7 +109,7 @@ router.patch('/api/v1/mentor/:MentorId', function(req, res) {
 
 // Delete a mentor by their ID
 router.delete('/api/v1/:MentorId', function(req, res) {
-  models.Mentor.delete({
+  models.Mentor.destroy({
     where: {
       MentorId: req.params.MentorId
     }
@@ -223,7 +223,7 @@ router.patch('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
 
 // Delete a expertise by their id
 router.delete('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
-  models.MentorExpertise.delete({
+  models.MentorExpertise.destroy({
     where: {
       MentorExpertiseId: req.params.MentorExpertiseId
     }

@@ -84,7 +84,7 @@ router.post('/api/v1/sponsorAward/:SponsorAwardId', function(req, res) {
 
 // Delete a team with a sponsor award
 router.delete('/api/v1/sponsorAward/:SponsorAwardId', function(req, res) {
-  models.SponsorAward.delete({
+  models.SponsorAward.destroy({
     where: {
       SponsorAwardId: req.params.SponsorAwardId
     }

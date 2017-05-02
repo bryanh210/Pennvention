@@ -122,7 +122,7 @@ router.patch('/api/v1/teamScore/:TeamScoreId', function(req, res) {
 
 //  Delete a teamScore by their ID
 router.delete('/api/v1/teamScore/:TeamScoreId', function(req, res) {
-  models.TeamScore.delete({
+  models.TeamScore.destroy({
     where: {
       TeamScoreId: req.params.TeamScoreId
     }
@@ -213,7 +213,7 @@ router.post('/api/v1/rubric/:RubricId', function(req, res) {
 
 // Delete a rubric by their ID
 router.delete('/api/v1/rubric/:RubricId', function(req, res) {
-  models.Rubric.delete({
+  models.Rubric.destroy({
     where: {
       RubricId: req.params.RubricId
     }
@@ -329,7 +329,7 @@ router.post('/api/v1/question/:QuestionId', function(req, res) {
 
 // Delete a question by their ID
 router.delete('/api/v1/question/:QuestionId', function(req, res) {
-  models.Question.delete({
+  models.Question.destroy({
     where: {
       QuestionId: req.params.QuestionId
     }

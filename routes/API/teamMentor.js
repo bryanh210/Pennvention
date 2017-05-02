@@ -77,7 +77,7 @@ router.post('/api/v1/team/mentor/', function(req, res) {
 
 // Delete a mentor by their ID
 router.delete('/api/v1/team/mentor/:TeamMentorId', function(req, res) {
-  models.Mentor.delete({
+  models.Mentor.destroy({
     where: {
       TeamMentorId: req.params.TeamMentorId
     }

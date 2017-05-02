@@ -5,7 +5,12 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        StudentMajor.belongsTo(models.Student)
+        StudentMajor.belongsTo(models.Student, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        })
       }
     }
   });

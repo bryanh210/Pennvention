@@ -13,7 +13,12 @@ module.exports = function(sequelize, DataTypes) {
         Team.belongsToMany(models.Judge, {through: 'TeamJudge'}),
         Team.belongsToMany(models.Mentor, {through: 'TeamMentor'}),
         Team.hasOne(models.TeamLogo),
-        Team.belongsTo(models.Iteration),
+        Team.belongsTo(models.Iteration, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
         Team.hasMany(models.TeamStrength),
         Team.hasMany(models.TeamWeakness),
         Team.hasMany(models.TeamMentorExpertiseRequested),

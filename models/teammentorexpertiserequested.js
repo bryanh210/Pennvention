@@ -5,7 +5,12 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        TeamMentorExpertiseRequested.belongsTo(models.Team)
+        TeamMentorExpertiseRequested.belongsTo(models.Team, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        })
       }
     }
   });

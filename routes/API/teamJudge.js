@@ -77,7 +77,7 @@ router.post('/api/v1/team/judge/', function(req, res) {
 
 // Delete a judge by their ID
 router.delete('/api/v1/team/judge/:TeamJudgeId', function(req, res) {
-  models.Judge.delete({
+  models.Judge.destroy({
     where: {
       TeamJudgeId: req.params.TeamJudgeId
     }

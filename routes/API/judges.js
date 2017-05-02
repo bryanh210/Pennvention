@@ -111,7 +111,7 @@ router.patch('/api/v1/judge/:JudgeId', function(req, res) {
 
 // Delete a judge by their ID
 router.delete('/api/v1/:JudgeId', function(req, res) {
-  models.Judge.delete({
+  models.Judge.destroy({
     where: {
       JudgeId: req.params.JudgeId
     }
@@ -225,7 +225,7 @@ router.patch('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
 
 // Delete a expertise by their id
 router.delete('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
-  models.JudgeExpertise.delete({
+  models.JudgeExpertise.destroy({
     where: {
       JudgeExpertiseId: req.params.JudgeExpertiseId
     }

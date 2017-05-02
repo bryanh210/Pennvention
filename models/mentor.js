@@ -11,7 +11,12 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Mentor.belongsToMany(models.Team, {through: 'TeamMentor'}),
-        Mentor.belongsTo(models.User),
+        Mentor.belongsTo(models.User, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
         Mentor.hasMany(models.MentorExpertise)
       }
     }

@@ -93,7 +93,7 @@ router.patch('/api/v1/student/:StudentId', function(req, res) {
 
 // Delete a student by their ID
 router.delete('/api/v1/:StudentId', function(req, res) {
-  models.Student.delete({
+  models.Student.destroy({
     where: {
       StudentId: req.params.StudentId
     }
@@ -207,7 +207,7 @@ router.patch('/api/v1/student/major/:StudentMajorId', function(req, res) {
 
 // Delete a major by their id
 router.delete('/api/v1/student/major/:StudentMajorId', function(req, res) {
-  models.StudentMajor.delete({
+  models.StudentMajor.destroy({
     where: {
       StudentMajorId: req.params.StudentMajorId
     }

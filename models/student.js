@@ -11,8 +11,18 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Student.belongsTo(models.Team),
-        Student.belongsTo(models.User),
+        Student.belongsTo(models.Team, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
+        Student.belongsTo(models.User, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
         Student.hasMany(models.StudentMajor)
       }
     }

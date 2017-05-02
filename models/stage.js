@@ -6,9 +6,19 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Stage.belongsTo(models.Iteration),
+        Stage.belongsTo(models.Iteration, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
         Stage.hasMany(models.TeamScore),
-        Stage.belongsTo(models.Rubric)
+        Stage.belongsTo(models.Rubric, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        })
       }
     }
   });

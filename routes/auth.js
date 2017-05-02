@@ -5,7 +5,7 @@ var router = express.Router();
 var models = require('../models');
 var bcrypt = require('bcrypt');
 var passport = require('passport');
-var config = require('../config/config.js');
+var config = require('../config.js');
 var LocalStrategy = require('passport-local').Strategy;
 
 var callbackURL = "localhost:3000" || config.DATABASE_URL || "localhost:3000"

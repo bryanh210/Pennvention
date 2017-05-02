@@ -6,7 +6,12 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Question.belongsTo(models.Rubric),
+        Question.belongsTo(models.Rubric, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
         Question.hasMany(models.Mark)
       }
     }

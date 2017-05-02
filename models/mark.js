@@ -5,8 +5,18 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Mark.belongsTo(models.Question),
-        Mark.belongsTo(models.TeamScore)
+        Mark.belongsTo(models.Question, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
+        Mark.belongsTo(models.TeamScore, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        })
       }
     }
   });

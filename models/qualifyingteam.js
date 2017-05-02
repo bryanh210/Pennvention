@@ -5,8 +5,18 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        QualifyingTeam.belongsTo(models.Team),
-        QualifyingTeam.belongsTo(models.Stage)
+        QualifyingTeam.belongsTo(models.Team, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
+        QualifyingTeam.belongsTo(models.Stage, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        })
       }
     }
   });

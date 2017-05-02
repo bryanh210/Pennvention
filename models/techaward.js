@@ -7,8 +7,18 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        TechAward.belongsTo(models.Iteration),
-        TechAward.belongsTo(models.Team)
+        TechAward.belongsTo(models.Iteration, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
+        TechAward.belongsTo(models.Team, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        })
       }
     }
   });

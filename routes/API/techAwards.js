@@ -84,7 +84,7 @@ router.post('/api/v1/techAward/:TechAwardId', function(req, res) {
 
 // Delete a team with a tech award
 router.delete('/api/v1/techAward/:TechAwardId', function(req, res) {
-  models.TechAward.delete({
+  models.TechAward.destroy({
     where: {
       TechAwardId: req.params.TechAwardId
     }

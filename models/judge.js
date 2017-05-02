@@ -8,7 +8,12 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Judge.belongsToMany(models.Team, {through: 'TeamJudge'}),
-        Judge.belongsTo(models.User),
+        Judge.belongsTo(models.User, {
+          onDelete: "CASCADE",
+          foreignKey: {
+            allowNull: false
+          }
+        }),
         Judge.hasMany(models.TeamScore),
         Judge.hasMany(models.JudgeExpertise),
         Judge.hasMany(models.TeamScore)

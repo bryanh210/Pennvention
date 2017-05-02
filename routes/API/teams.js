@@ -86,7 +86,7 @@ router.patch('/api/v1/team/:TeamId', function(req, res) {
 
 // Delete a team by their id
 router.delete('/api/v1/team/:TeamId', function(req, res) {
-  models.Team.delete({
+  models.Team.destroy({
     where: {
       TeamId: req.params.Teamid
     }
@@ -180,7 +180,7 @@ router.patch('/api/v1/team/logo/:TeamId', function(req, res) {
 
 // Delete a logo for a team by their ID
 router.delete('/api/v1/team/:TeamId', function(req, res) {
-  models.TeamLogo.delete({
+  models.TeamLogo.destroy({
     where: {
       TeamId: req.params.Teamid
     }
@@ -293,7 +293,7 @@ router.patch('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequeste
 
 // Delete a mentorExpertiseRequested for a team by their ID
 router.delete('/api/v1/team/:TeamMentorExpertiseRequestedId', function(req, res) {
-  models.TeamMentorExpertiseRequested.delete({
+  models.TeamMentorExpertiseRequested.destroy({
     where: {
       TeamMentorExpertiseRequestedId: req.params.TeamMentorExpertiseRequestedid
     }
@@ -406,7 +406,7 @@ router.patch('/api/v1/team/strength/:TeamStrengthId', function(req, res) {
 
 // Delete a strength for a team by their ID
 router.delete('/api/v1/team/:TeamStrengthId', function(req, res) {
-  models.TeamStrength.delete({
+  models.TeamStrength.destroy({
     where: {
       TeamStrengthId: req.params.TeamStrengthid
     }
@@ -519,7 +519,7 @@ router.patch('/api/v1/team/weakness/:TeamWeaknessId', function(req, res) {
 
 // Delete a weakness for a team by their ID
 router.delete('/api/v1/team/:TeamWeaknessId', function(req, res) {
-  models.TeamWeakness.delete({
+  models.TeamWeakness.destroy({
     where: {
       TeamWeaknessId: req.params.TeamWeaknessid
     }

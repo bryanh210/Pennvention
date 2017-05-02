@@ -98,7 +98,7 @@ router.patch('api/v1/iteration/:IterationId', function(req, res) {
 
 // Delete an iteration by their ID
 router.delete('/api/v1/iteration/:IterationId', function(req, res) {
-  models.Iteration.delete({
+  models.Iteration.destroy({
     where: {
       IterationId: req.params.IterationId
     }
@@ -216,7 +216,7 @@ router.patch('/api/v1/stage/:StageId', function(req, res) {
 
 // Delete a stage by their ID
 router.patch('/api/v1/stage/:StageId', function(req, res) {
-  models.Stage.delete({
+  models.Stage.destroy({
     where: {
       StageId: req.params.StageId
     }
@@ -308,7 +308,7 @@ router.post('/api/v1/qualifyingTeams', function(req, res) {
 
 // Delete a qualifying team by their ID
 router.post('/api/v1/qualifyingTeams/:QualifyingTeamId', function(req, res) {
-  models.QualifyingTeam.delete({
+  models.QualifyingTeam.destroy({
     where: {
       QualifyingTeamId: req.params.QualifyingTeamId
     }
