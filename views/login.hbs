@@ -20,6 +20,8 @@
 
     <!-- Custom Theme Style -->
     <link href="/stylesheets/adminCustom.css" rel="stylesheet">
+
+
   </head>
 
   <body class="login">
@@ -30,16 +32,16 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form method="post">
+            <form method="post" action="/login" class="loginForm">
               <h1>Login Form</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input name="loginEmail" type="text" class="form-control" placeholder="Username" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input name="loginPassword" type="password" class="form-control" placeholder="Password" required="" />
               </div>
               <div>
-                <button class="btn btn-default submit" type="submit" style="text-shadow: 0 1px 0 #fff;">Log in</button>
+                <button class="btn btn-default submit loginButton" type="submit" style="text-shadow: 0 1px 0 #fff;">Log in</button>
                 <a class="reset_pass" href="#">Lost your password?</a>
               </div>
 
@@ -66,17 +68,17 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form method="post">
+            <form method="post" action="/register" class=registerForm>
               <h1>Create Account</h1>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required="" />
+                <input name="registerEmail" type="email" class="form-control" placeholder="Email" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input name="registerPassword" type="password" class="form-control" placeholder="Password" required="" />
               </div>
                 <h4>What kind of user are you?</h4>
               <div style="margin-bottom:20px;">
-                <select class="form-control" required="">
+                <select name="registerRole" class="form-control" required="">
                   <option value="">Choose option</option>
                   <option value="student">Student</option>
                   <option value="judge">Judge</option>
@@ -84,7 +86,7 @@
                 </select>
               </div>
               <div>
-                <button class="btn btn-default submit" type="submit" style="text-shadow: 0 1px 0 #fff;">Submit</button>
+                <button class="btn btn-default submit registerButton" type="submit" style="text-shadow: 0 1px 0 #fff;">Submit</button>
               </div>
 
               <div class="clearfix"></div>
@@ -109,5 +111,9 @@
         </div>
       </div>
     </div>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/scripts/loginScript.js"></script>
+
   </body>
 </html>

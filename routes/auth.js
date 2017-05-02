@@ -28,11 +28,17 @@ module.exports = function(passport) {
   });
 
   // POST Login page
-  router.post('/login', passport.authenticate('local',{
-    successRedirect: '/protected',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
+  // router.post('/login', passport.authenticate('local',{
+  //   successRedirect: '/protected',
+  //   failureRedirect: '/login',
+  //   failureFlash: true
+  // }));
+
+  router.post('/login', function(req, res) {
+    console.log('TEST', req.body.loginEmail)
+    console.log('pass', req.body.loginPassword)
+    console.log('TEST', req.body)
+  });
 
   // GET Logout page
   router.get('/logout', function(req, res) {
@@ -40,18 +46,18 @@ module.exports = function(passport) {
     res.redirect('/login');
   });
 
-  router.post('/login#signup', function(req, res) {
-    console.log("TEST")
-    var email = req.body.email;
-    var password = req.body.password;
-    var role = req.body.role;
+  router.post('/register', function(req, res) {
+    var email = req.body.registerEmail;
+    var password = req.body.registerPassword;
+    var role = req.body.registerRole;
     if (!email || !password || ! role) {
       req.flash('error', "Please fill in all the fields.");
       // res.redirect('/signup');
     }
-
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt)
+
+    console.log(email, role, salt, hashedPassword)
 
     fetch(callbackURL + '/api/v1/user', {
       method: 'POST',
