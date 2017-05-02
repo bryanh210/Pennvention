@@ -83,7 +83,7 @@ router.patch('/api/v1/user/:UserId', function(req, res) {
 });
 
 // Delete a user by their ID
-router.delete('/api/v1/:UserId', function(req, res) {
+router.delete('/api/v1/user/:UserId', function(req, res) {
   models.User.delete({
     where: {
       UserId: req.params.UserId

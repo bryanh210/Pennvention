@@ -66,4 +66,5 @@ npm-debug.log
 *.swp
 connect.js
 env.sh
+config.js
 config/

@@ -5,7 +5,10 @@ var router = express.Router();
 var models = require('../models');
 var bcrypt = require('bcrypt');
 var passport = require('passport');
+var config = require('../config/config.js');
 var LocalStrategy = require('passport-local').Strategy;
+
+var callbackURL = "localhost:3000" || config.DATABASE_URL || "localhost:3000"
 
 module.exports = function(passport) {
 
@@ -36,6 +39,65 @@ module.exports = function(passport) {
     req.logout();
     res.redirect('/login');
   });
+
+  router.post('/login#signup', function(req, res) {
+    console.log("TEST")
+    var email = req.body.email;
+    var password = req.body.password;
+    var role = req.body.role;
+    if (!email || !password || ! role) {
+      req.flash('error', "Please fill in all the fields.");
+      // res.redirect('/signup');
+    }
+
+    var salt = bcrypt.genSaltSync(10);
+    var hashedPassword = bcrypt.hashSync(password, salt)
+
+    fetch(callbackURL + '/api/v1/user', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        salt: salt,
+        hash: hashedPassword,
+        role: role
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        console.log("BEST")
+        res.redirect('/login');
+      } else {
+        console.log("FEST")
+        req.flash('error', responseJson.error);
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    });
+    // models.User
+    //   .findOrCreate({
+    //     where: {
+    //       email: email
+    //     },
+    //     defaults: {
+    //       salt: salt,
+    //       hash: hashedPassword
+    //     }
+    //   })
+    //   .spread(function(user, created) {
+    //     console.log(user.get({
+    //       plain: true
+    //     }));
+    //     console.log(created);
+    //     if (!created) {
+    //       req.flash('error', "That username is already taken.");
+    //     }
+    //   });
+    });
 
   return router;
 };

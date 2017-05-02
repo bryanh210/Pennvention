@@ -13,6 +13,7 @@ var auth = require('./routes/auth');
 var bcrypt = require('bcrypt');
 
 var model = require('./models');
+var config = require('./config/config.js');
 
 // Connect routes for different user types.
 var routes = require('./routes/index');
@@ -33,6 +34,7 @@ var APIteamJudge = require('./routes/API/teamJudge')
 var APIteamMentor = require('./routes/API/teamMentor')
 var APIteams = require('./routes/API/teams')
 var APItechAwards = require('./routes/API/techAwards')
+var APIusers = require('./routes/API/users')
 
 var app = express();
 
@@ -134,6 +136,7 @@ app.use('/', APIteamJudge);
 app.use('/', APIteamMentor);
 app.use('/', APIteams);
 app.use('/', APItechAwards);
+app.use('/', APIusers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
