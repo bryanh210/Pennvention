@@ -11,7 +11,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        Student.belongsTo(models.Team),
+        Student.belongsTo(models.User),
+        Student.hasMany(models.StudentMajor)
       }
     }
   });

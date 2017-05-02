@@ -6,7 +6,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        Stage.belongsTo(models.Iteration),
+        Stage.hasMany(models.TeamScore),
+        Stage.belongsTo(models.Rubric)
       }
     }
   });

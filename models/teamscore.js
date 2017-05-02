@@ -5,7 +5,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        TeamScore.belongsTo(models.Judge),
+        TeamScore.belongsTo(models.Team),
+        TeamScore.belongsTo(models.Stage),
+        TeamScore.hasMany(models.Mark)
       }
     }
   });

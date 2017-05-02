@@ -10,7 +10,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        Mentor.belongsToMany(models.Team, {through: 'TeamMentor'}),
+        Mentor.belongsTo(models.User),
+        Mentor.hasMany(models.MentorExpertise)
       }
     }
   });

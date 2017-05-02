@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        QualifyingTeam.belongsTo(models.Team),
+        QualifyingTeam.belongsTo(models.Stage)
       }
     }
   });
