@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Iteration = sequelize.define('Iteration', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     competitionPeriod: DataTypes.STRING
   }, {
     classMethods: {

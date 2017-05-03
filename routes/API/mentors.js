@@ -41,12 +41,13 @@ router.get('/api/v1/mentor/:MentorId', function(req, res) {
 // Create a new mentor
 router.post('/api/v1/mentor/', function(req, res) {
   models.Mentor.create({
-    MentorId: req.user.id || req.params.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    phoneNumber: req.body.phoneNumber,
-    skypeUsername: req.body.skypeUsername,
-    biography: req.body.biography,
+    MentorId: req.body.UserId,
+    UserId: req.body.UserId || req.params.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
+    firstName: req.body.firstName || '',
+    lastName: req.body.lastName || '',
+    phoneNumber: req.body.phoneNumber || '',
+    skypeUsername: req.body.skypeUsername || '',
+    biography: req.body.biography || '',
     approved: false
   }).then(function(mentor) {
     res.json({

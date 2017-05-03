@@ -86,7 +86,7 @@ router.patch('/api/v1/user/:UserId', function(req, res) {
 router.delete('/api/v1/user/:UserId', function(req, res) {
   models.User.destroy({
     where: {
-      id: req.params.UserId
+      UserId: req.params.UserId
     }
   }).then(function(user) {
     res.json({

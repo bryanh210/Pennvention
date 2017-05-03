@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var MentorExpertise = sequelize.define('MentorExpertise', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     subject: DataTypes.STRING
   }, {
     classMethods: {

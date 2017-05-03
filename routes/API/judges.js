@@ -41,12 +41,12 @@ router.get('/api/v1/judge/:JudgeId', function(req, res) {
 // Create a new judge
 router.post('/api/v1/judge/', function(req, res) {
   models.Judge.create({
-    JudgeId: req.user.id || req.params.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    phoneNumber: req.body.phoneNumber,
-    skypeUsername: req.body.skypeUsername,
-    biography: req.body.biography,
+    UserId: req.user.id || req.params.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
+    firstName: req.body.firstName || '',
+    lastName: req.body.lastName || '',
+    phoneNumber: req.body.phoneNumber || '',
+    skypeUsername: req.body.skypeUsername || '',
+    biography: req.body.biography || '',
     approved: false
   }).then(function(judge) {
     res.json({

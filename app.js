@@ -74,14 +74,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //multiple LocalStrategies for Users, Mentors, Judges and Admins
 
-passport.use(new LocalStrategy(function(email, password, done) {
+passport.use(new LocalStrategy({
+  usernameField: 'loginEmail',
+  passwordField: 'loginPassword'
+}, function(username, password, done) {
   console.log("Using LocalStrategy");
   model.User.findOne({
     where: {
-      'email': email
+      email: username
     }
   }).then(function(user) {
     if (user == null) {
+      console.log('test')
       return done(null, false, {
         message: 'Incorrect credentials.'
       })
@@ -108,7 +112,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  model.User.findById(id).then(function (user) {
+  model.User.findOne({where:{id: id}}).then(function (user) {
     console.log(user);
     if (user == null) {
       done(new Error('Wrong user id.'))

@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var QualifyingTeam = sequelize.define('QualifyingTeam', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     a: DataTypes.STRING
   }, {
     classMethods: {

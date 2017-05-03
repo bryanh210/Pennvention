@@ -41,14 +41,15 @@ router.get('/api/v1/student/:StudentId', function(req, res) {
 // Create a new student
 router.post('/api/v1/student/', function(req, res) {
   models.Student.create({
-    StudentId: req.user.id || req.params.StudentId, //NOT SURE IF WE WANT TO ALLOW THIS
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    phoneNumber: req.body.phoneNumber,
-    skypeUsername: req.body.skypeUsername,
-    typeOfStudent: req.body.typeOfStudent,
-    school: req.body.school,
-    expectedYearOfGraduation: req.body.expectedYearOfGraduation,
+    StudentID: req.user.UserId,
+    UserId: req.user.UserId,
+    firstName: req.body.firstName || '',
+    lastName: req.body.lastName || '',
+    phoneNumber: req.body.phoneNumber || '',
+    skypeUsername: req.body.skypeUsername || '',
+    typeOfStudent: req.body.typeOfStudent || '',
+    school: req.body.school || '',
+    expectedYearOfGraduation: req.body.expectedYearOfGraduation || '',
     TeamId: null
   }).then(function(student) {
     res.json({
@@ -168,7 +169,7 @@ router.get('/api/v1/student/majors/:StudentId', function(req, res) {
 // Create a new major for a student by their ID
 router.post('/api/v1/student/major', function(req, res) {
   models.StudentMajor.create({
-    StudentId: req.user.id || req.params.StudentId, //NOT SURE IF WE WANT TO ALLOW THIS
+    StudentId: req.user.id || req.body.StudentId, //NOT SURE IF WE WANT TO ALLOW THIS
     major: req.body.major
   }).then(function(studentMajor) {
     res.json({

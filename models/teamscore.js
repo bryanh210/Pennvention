@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var TeamScore = sequelize.define('TeamScore', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     comment: DataTypes.TEXT
   }, {
     classMethods: {

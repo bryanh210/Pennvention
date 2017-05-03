@@ -45,7 +45,8 @@ router.post('/api/v1/team', function(req, res) {
     projectName: req.body.projectName,
     projectDescription: req.body.projectDescription,
     deckLink: req.body.slideDeckLink, // MIGHT HAVE TO UPDATE IF WE WANT MULTIPLE LINKS/FILE UPLOAD
-    videoLink: req.body.videoLink // MIGHT HAVE TO UPDATE IF WE WANT MULTIPLE LINKS/FILE UPLOAD
+    videoLink: req.body.videoLink, // MIGHT HAVE TO UPDATE IF WE WANT MULTIPLE LINKS/FILE UPLOAD
+    IterationId: req.body.IterationId || 1
   }).then(function(team) {
     res.json({
       success: true,

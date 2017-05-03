@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Judge = sequelize.define('Judge', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     approved: DataTypes.BOOLEAN,
     phoneNumber: DataTypes.STRING,
     biography: DataTypes.TEXT
