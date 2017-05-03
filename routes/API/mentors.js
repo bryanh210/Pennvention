@@ -23,7 +23,7 @@ router.get('/api/v1/mentors', function(req, res) {
 router.get('/api/v1/mentor/:MentorId', function(req, res) {
   models.Mentor.findAll({
     where: {
-      MentorId: req.params.MentorId
+      id: req.params.MentorId
     }
   }).then(function(mentor) {
     res.json({
@@ -41,8 +41,8 @@ router.get('/api/v1/mentor/:MentorId', function(req, res) {
 // Create a new mentor
 router.post('/api/v1/mentor/', function(req, res) {
   models.Mentor.create({
-    MentorId: req.body.UserId,
-    UserId: req.body.UserId || req.params.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
+    id: req.user.id,
+    UserId: req.user.id, //NOT SURE IF WE WANT TO ALLOW THIS
     firstName: req.body.firstName || '',
     lastName: req.body.lastName || '',
     phoneNumber: req.body.phoneNumber || '',
@@ -148,7 +148,7 @@ router.get('/api/v1/mentors/expertise', function(req, res) {
 router.get('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
   models.MentorExpertise.findAll({
     where: {
-      MentorExpertiseId: req.params.MentorExpertiseId
+      id: req.params.MentorExpertiseId
     }
   }).then(function(mentorExpertise) {
     res.json({
@@ -164,7 +164,7 @@ router.get('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
 });
 
 // Get the expertise for a mentor by their ID
-router.get('/api/v1/mentor/expertise/:MentorId', function(req, res) {
+router.get('/api/v1/mentor/expertises/MentorId/:MentorId', function(req, res) {
   models.MentorExpertise.findAll({
     where: {
       MentorId: req.params.MentorId
@@ -185,7 +185,7 @@ router.get('/api/v1/mentor/expertise/:MentorId', function(req, res) {
 // Create a new expertise for a mentor by their ID
 router.post('/api/v1/mentor/expertise', function(req, res) {
   models.MentorExpertise.create({
-    MentorId: req.user.id || req.params.MentorId, //NOT SURE IF WE WANT TO ALLOW THI
+    MentorId: req.query.MentorId || req.user.id, //NOT SURE IF WE WANT TO ALLOW THI
     expertise: req.body.expertise
   }).then(function(mentorExpertise) {
     res.json({
@@ -206,7 +206,7 @@ router.patch('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
     expertise: req.body.expertise
   }, {
     where: {
-      MentorExpertiseId: req.params.MentorExpertiseId
+      id: req.params.MentorExpertiseId
     }
   }).then(function(mentorExpertise) {
     res.json({
@@ -226,7 +226,7 @@ router.patch('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
 router.delete('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
   models.MentorExpertise.destroy({
     where: {
-      MentorExpertiseId: req.params.MentorExpertiseId
+      id: req.params.MentorExpertiseId
     }
   }).then(function(mentorExpertise) {
     res.json({

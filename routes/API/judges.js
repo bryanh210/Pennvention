@@ -23,7 +23,7 @@ router.get('/api/v1/judges', function(req, res) {
 router.get('/api/v1/judge/:JudgeId', function(req, res) {
   models.Judge.findAll({
     where: {
-      JudgeId: req.params.JudgeId
+      id: req.params.JudgeId
     }
   }).then(function(judge) {
     res.json({
@@ -41,7 +41,8 @@ router.get('/api/v1/judge/:JudgeId', function(req, res) {
 // Create a new judge
 router.post('/api/v1/judge/', function(req, res) {
   models.Judge.create({
-    UserId: req.user.id || req.params.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
+    id: req.user.id,
+    UserId: req.user.id, //NOT SURE IF WE WANT TO ALLOW THIS
     firstName: req.body.firstName || '',
     lastName: req.body.lastName || '',
     phoneNumber: req.body.phoneNumber || '',
@@ -67,7 +68,7 @@ router.post('/api/v1/judge/approve/:JudgeId', function(req, res) {
     approved: true
   }, {
     where: {
-      JudgeId: req.params.JudgeId
+      id: req.params.JudgeId
     }
   }).then(function(judge) {
     res.json({
@@ -94,7 +95,7 @@ router.patch('/api/v1/judge/:JudgeId', function(req, res) {
     biography: req.body.biography
   }, {
     where: {
-      JudgeId: req.params.JudgeId
+      id: req.params.JudgeId
     }
   }).then(function(judge) {
     res.json({
@@ -113,7 +114,7 @@ router.patch('/api/v1/judge/:JudgeId', function(req, res) {
 router.delete('/api/v1/:JudgeId', function(req, res) {
   models.Judge.destroy({
     where: {
-      JudgeId: req.params.JudgeId
+      id: req.params.JudgeId
     }
   }).then(function(judge) {
     res.json({
@@ -149,7 +150,7 @@ router.get('/api/v1/judges/expertise', function(req, res) {
 router.get('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
   models.JudgeExpertise.findAll({
     where: {
-      JudgeExpertiseId: req.params.JudgeExpertiseId
+      id: req.params.JudgeExpertiseId
     }
   }).then(function(judgeExpertise) {
     res.json({
@@ -165,7 +166,7 @@ router.get('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
 });
 
 // Get the expertise for a judge by their ID
-router.get('/api/v1/judge/expertise/:JudgeId', function(req, res) {
+router.get('/api/v1/judge/expertises/JudgeId/:JudgeId', function(req, res) {
   models.JudgeExpertise.findAll({
     where: {
       JudgeId: req.params.JudgeId
@@ -186,7 +187,7 @@ router.get('/api/v1/judge/expertise/:JudgeId', function(req, res) {
 // Create a new expertise for a judge by their ID
 router.post('/api/v1/judge/expertise', function(req, res) {
   models.JudgeExpertise.create({
-    JudgeId: req.user.id || req.params.JudgeId, //NOT SURE IF WE WANT TO ALLOW THI
+    JudgeId: req.query.JudgeId || req.user.id, //NOT SURE IF WE WANT TO ALLOW THI
     expertise: req.body.expertise
   }).then(function(judgeExpertise) {
     res.json({
@@ -207,7 +208,7 @@ router.patch('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
     expertise: req.body.expertise
   }, {
     where: {
-      JudgeExpertiseId: req.params.JudgeExpertiseId
+      id: req.params.JudgeExpertiseId
     }
   }).then(function(judgeExpertise) {
     res.json({
@@ -227,7 +228,7 @@ router.patch('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
 router.delete('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
   models.JudgeExpertise.destroy({
     where: {
-      JudgeExpertiseId: req.params.JudgeExpertiseId
+      id: req.params.JudgeExpertiseId
     }
   }).then(function(judgeExpertise) {
     res.json({

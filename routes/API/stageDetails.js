@@ -20,7 +20,7 @@ router.get('/api/v1/iterations', function(req, res) {
 });
 
 // Get all the iterations for a specified competition period
-router.get('/api/v1/iteration/:competitionPeriod', function(req, res) {
+router.get('/api/v1/iteration/competitonPeriod/:competitionPeriod', function(req, res) {
   models.Iteration.findAll({
     where: {
       competitionPeriod: req.params.competitionPeriod
@@ -42,7 +42,7 @@ router.get('/api/v1/iteration/:competitionPeriod', function(req, res) {
 router.get('/api/v1/iteration/:IterationId', function(req, res) {
   models.Iteration.findAll({
     where: {
-      IterationId: req.params.IterationId
+      id: req.params.IterationId
     }
   }).then(function(iteration) {
     res.json({
@@ -80,7 +80,7 @@ router.patch('api/v1/iteration/:IterationId', function(req, res) {
     competitionPeriod: req.body.competitionPeriod
   }, {
     where: {
-      IterationId: req.params.IterationId
+      id: req.params.IterationId
     }
   }).then(function(iteration) {
     res.json({
@@ -100,7 +100,7 @@ router.patch('api/v1/iteration/:IterationId', function(req, res) {
 router.delete('/api/v1/iteration/:IterationId', function(req, res) {
   models.Iteration.destroy({
     where: {
-      IterationId: req.params.IterationId
+      i: req.params.IterationId
     }
   }).then(function(iteration) {
     res.json({
@@ -133,7 +133,7 @@ router.get('/api/v1/stages', function(req, res) {
 });
 
 // Get all the stages by their iteration
-router.get('/api/v1/stages/:IterationId', function(req, res) {
+router.get('/api/v1/stages/IterationId/:IterationId', function(req, res) {
   models.Stage.findAll({
     where: {
       IterationId: req.params.IterationId
@@ -155,7 +155,7 @@ router.get('/api/v1/stages/:IterationId', function(req, res) {
 router.get('/api/v1/stage/:StageId', function(req, res) {
   models.Stage.findAll({
     where: {
-      StageId: req.params.StageId
+      id: req.params.StageId
     }
   }).then(function(stage) {
     res.json({
@@ -199,7 +199,7 @@ router.patch('/api/v1/stage/:StageId', function(req, res) {
     RubricId: req.body.RubricId
   }, {
     where: {
-      StageId: req.params.StageId
+      id: req.params.StageId
     }
   }).then(function(stage) {
     res.json({
@@ -218,7 +218,7 @@ router.patch('/api/v1/stage/:StageId', function(req, res) {
 router.patch('/api/v1/stage/:StageId', function(req, res) {
   models.Stage.destroy({
     where: {
-      StageId: req.params.StageId
+      id: req.params.StageId
     }
   }).then(function(stage) {
     res.json({
@@ -251,7 +251,7 @@ router.get('/api/v1/qualifyingTeams', function(req, res) {
 });
 
 // Get all the QualifyingTeams by the StageId
-router.get('/api/v1/qualifyingTeams/:StageId', function(req, res) {
+router.get('/api/v1/qualifyingTeams/StageId/:StageId', function(req, res) {
   models.QualifyingTeam.findAll({
     where:{
       StageId: req.params.StageId
@@ -269,11 +269,11 @@ router.get('/api/v1/qualifyingTeams/:StageId', function(req, res) {
   })
 });
 
-// Get all the QualifyingTeam by their Id
-router.get('/api/v1/qualifyingTeams/:QualifyingTeamId', function(req, res) {
+// Get a qualifying team by their ID
+router.get('/api/v1/qualifyingTeam/:QualifyingTeamId', function(req, res) {
   models.QualifyingTeam.findAll({
     where:{
-      QualifyingTeamId: req.params.QualifyingTeamId
+      id: req.params.QualifyingTeamId
     }
   }).then(function(qualifyingTeam) {
     res.json({
@@ -310,7 +310,7 @@ router.post('/api/v1/qualifyingTeams', function(req, res) {
 router.post('/api/v1/qualifyingTeams/:QualifyingTeamId', function(req, res) {
   models.QualifyingTeam.destroy({
     where: {
-      QualifyingTeamId: req.params.QualifyingTeamId
+      id: req.params.QualifyingTeamId
     }
   }).then(function(qualifyingTeam) {
     res.json({

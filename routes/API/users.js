@@ -23,7 +23,7 @@ router.get('/api/v1/users', function(req, res) {
 router.get('/api/v1/user/:UserId', function(req, res) {
   models.User.findAll({
     where: {
-      UserId: req.params.UserId
+      id: req.params.UserId
     }
   }).then(function(user) {
     res.json({
@@ -67,7 +67,7 @@ router.patch('/api/v1/user/:UserId', function(req, res) {
     role: req.body.role
   }, {
     where: {
-      UserId: req.params.UserId
+      id: req.params.UserId
     }
   }).then(function(user) {
     res.json({
@@ -86,7 +86,7 @@ router.patch('/api/v1/user/:UserId', function(req, res) {
 router.delete('/api/v1/user/:UserId', function(req, res) {
   models.User.destroy({
     where: {
-      UserId: req.params.UserId
+      id: req.params.UserId
     }
   }).then(function(user) {
     res.json({

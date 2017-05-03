@@ -20,10 +20,10 @@ router.get('/api/v1/teamScores', function(req, res) {
 });
 
 // Get all the teamScores for a team
-router.get('/api/v1/teamScore/:TeamId', function(req, res) {
+router.get('/api/v1/teamScores/TeamId/:TeamId', function(req, res) {
   models.TeamScore.findAll({
     where: {
-      TeamId: req.params.TeamId
+      id: req.params.TeamId
     }
   }).then(function(teamScore) {
     res.json({
@@ -39,7 +39,7 @@ router.get('/api/v1/teamScore/:TeamId', function(req, res) {
 });
 
 //  Get all the teamScores a judge created
-router.get('/api/v1/teamScore/:JudgeId', function(req, res) {
+router.get('/api/v1/teamScores/JudgeId/:JudgeId', function(req, res) {
   models.TeamScore.findAll({
     where: {
       JudgeId: req.params.JudgeId
@@ -61,7 +61,7 @@ router.get('/api/v1/teamScore/:JudgeId', function(req, res) {
 router.get('/api/v1/teamScore/:TeamScoreId', function(req, res) {
   models.TeamScore.findAll({
     where: {
-      TeamScoreId: req.params.TeamScoreId
+      id: req.params.TeamScoreId
     }
   }).then(function(teamScore) {
     res.json({
@@ -80,7 +80,7 @@ router.get('/api/v1/teamScore/:TeamScoreId', function(req, res) {
 router.post('/api/v1/teamScore', function(req, res) {
   models.TeamScore.create({
     TeamId: req.body.teamId,
-    JudgeId: req.user.id || req.body.JudgeId, // NEED TO FIX THIS
+    JudgeId: req.body.JudgeId || req.user.id, // NEED TO FIX THIS
     StageDetailId: req.body.StageDetailId,
     comment: req.body.comment,
   }).then(function(teamScore) {
@@ -100,12 +100,12 @@ router.post('/api/v1/teamScore', function(req, res) {
 router.patch('/api/v1/teamScore/:TeamScoreId', function(req, res) {
   models.TeamScore.update({
     TeamId: req.body.teamId,
-    JudgeId: req.user.id || req.body.JudgeId, // NEED TO FIX THIS
+    JudgeId: req.body.JudgeId, // NEED TO FIX THIS
     StageDetailId: req.body.StageDetailId,
     comment: req.body.comment,
   }, {
     where: {
-      TeamScoreId: req.params.TeamScoreId
+      id: req.params.TeamScoreId
     }
   }).then(function(teamScore) {
     res.json({
@@ -124,7 +124,7 @@ router.patch('/api/v1/teamScore/:TeamScoreId', function(req, res) {
 router.delete('/api/v1/teamScore/:TeamScoreId', function(req, res) {
   models.TeamScore.destroy({
     where: {
-      TeamScoreId: req.params.TeamScoreId
+      id: req.params.TeamScoreId
     }
   }).then(function(teamScore) {
     res.json({
@@ -160,7 +160,7 @@ router.get('/api/v1/rubrics', function(req, res) {
 router.get('/api/v1/rubric/:RubricId', function(req, res) {
   models.Rubric.findAll({
     where: {
-      TeamRubricId: req.params.RubricId
+      id: req.params.RubricId
     }
   }).then(function(rubric) {
     res.json({
@@ -196,7 +196,7 @@ router.post('/api/v1/rubric/:RubricId', function(req, res) {
   models.Rubric.update({
   }, {
     where: {
-      RubricId: req.params.RubricId
+      id: req.params.RubricId
     }
   }).then(function(rubric) {
     res.json({
@@ -215,7 +215,7 @@ router.post('/api/v1/rubric/:RubricId', function(req, res) {
 router.delete('/api/v1/rubric/:RubricId', function(req, res) {
   models.Rubric.destroy({
     where: {
-      RubricId: req.params.RubricId
+      id: req.params.RubricId
     }
   }).then(function(rubric) {
     res.json({
@@ -248,10 +248,10 @@ router.get('/api/v1/questions', function(req, res) {
 });
 
 // Get all the questions for a rubric by RubricId
-router.get('/api/v1/questions/:RubricId', function(req, res) {
+router.get('/api/v1/questions/RubricId/:RubricId', function(req, res) {
   models.Question.findAll({
     where: {
-    RubricId: req.params.RubricId
+      RubricId: req.params.RubricId
     }
   }).then(function(questions) {
     res.json({
@@ -270,7 +270,7 @@ router.get('/api/v1/questions/:RubricId', function(req, res) {
 router.get('/api/v1/question/:QuestionId', function(req, res) {
   models.Question.findAll({
     where: {
-      TeamQuestionId: req.params.QuestionId
+      id: req.params.QuestionId
     }
   }).then(function(question) {
     res.json({
@@ -312,7 +312,7 @@ router.post('/api/v1/question/:QuestionId', function(req, res) {
     maxScore: req.body.maxScore
   }, {
     where: {
-      QuestionId: req.params.QuestionId
+      id: req.params.QuestionId
     }
   }).then(function(question) {
     res.json({
@@ -331,7 +331,7 @@ router.post('/api/v1/question/:QuestionId', function(req, res) {
 router.delete('/api/v1/question/:QuestionId', function(req, res) {
   models.Question.destroy({
     where: {
-      QuestionId: req.params.QuestionId
+      id: req.params.QuestionId
     }
   }).then(function(question) {
     res.json({
@@ -364,10 +364,10 @@ router.get('/api/v1/marks', function(req, res) {
 });
 
 // Get all the marks for a teamScore by TeamScoreId
-router.get('/api/v1/marks/:TeamScoreId', function(req, res) {
+router.get('/api/v1/marks/TeamScoreId/:TeamScoreId', function(req, res) {
   models.Mark.findAll({
     where: {
-    TeamScoreId: req.params.TeamScoreId
+      TeamScoreId: req.params.TeamScoreId
     }
   }).then(function(marks) {
     res.json({
@@ -386,7 +386,7 @@ router.get('/api/v1/marks/:TeamScoreId', function(req, res) {
 router.get('/api/v1/mark/:MarkId', function(req, res) {
   models.Mark.findAll({
     where: {
-      TeamMarkId: req.params.MarkId
+      id: req.params.MarkId
     }
   }).then(function(mark) {
     res.json({
@@ -428,7 +428,7 @@ router.post('/api/v1/mark/:MarkId', function(req, res) {
     score: score
   }, {
     where: {
-      MarkId: req.params.MarkId
+      id: req.params.MarkId
     }
   }).then(function(mark) {
     res.json({
@@ -447,7 +447,7 @@ router.post('/api/v1/mark/:MarkId', function(req, res) {
 router.delete('/api/v1/mark/:MarkId', function(req, res) {
   models.Mark.delete({
     where: {
-      MarkId: req.params.MarkId
+      id: req.params.MarkId
     }
   }).then(function(mark) {
     res.json({

@@ -41,8 +41,8 @@ router.get('/api/v1/student/:StudentId', function(req, res) {
 // Create a new student
 router.post('/api/v1/student/', function(req, res) {
   models.Student.create({
-    StudentID: req.user.UserId,
-    UserId: req.user.UserId,
+    id: req.user.id,
+    UserId: req.user.id,
     firstName: req.body.firstName || '',
     lastName: req.body.lastName || '',
     phoneNumber: req.body.phoneNumber || '',
@@ -77,7 +77,7 @@ router.patch('/api/v1/student/:StudentId', function(req, res) {
     TeamId: req.body.TeamId
   }, {
     where: {
-      StudentId: req.params.StudentId
+      id: req.params.StudentId
     }
   }).then(function(student) {
     res.json({
@@ -96,7 +96,7 @@ router.patch('/api/v1/student/:StudentId', function(req, res) {
 router.delete('/api/v1/:StudentId', function(req, res) {
   models.Student.destroy({
     where: {
-      StudentId: req.params.StudentId
+      id: req.params.StudentId
     }
   }).then(function(student) {
     res.json({
@@ -132,7 +132,7 @@ router.get('/api/v1/students/majors', function(req, res) {
 router.get('/api/v1/student/major/:StudentMajorId', function(req, res) {
   models.StudentMajor.findAll({
     where: {
-      StudentMajorId: req.params.StudentMajorId
+      id: req.params.StudentMajorId
     }
   }).then(function(studentMajor) {
     res.json({
@@ -148,7 +148,7 @@ router.get('/api/v1/student/major/:StudentMajorId', function(req, res) {
 });
 
 // Get the majors for a student by their ID
-router.get('/api/v1/student/majors/:StudentId', function(req, res) {
+router.get('/api/v1/student/majors/StudentId/:StudentId', function(req, res) {
   models.StudentMajor.findAll({
     where: {
       StudentId: req.params.StudentId
@@ -169,7 +169,7 @@ router.get('/api/v1/student/majors/:StudentId', function(req, res) {
 // Create a new major for a student by their ID
 router.post('/api/v1/student/major', function(req, res) {
   models.StudentMajor.create({
-    StudentId: req.user.id || req.body.StudentId, //NOT SURE IF WE WANT TO ALLOW THIS
+    StudentId: req.query.StudentId || req.user.id, //NOT SURE IF WE WANT TO ALLOW THIS
     major: req.body.major
   }).then(function(studentMajor) {
     res.json({
@@ -190,7 +190,7 @@ router.patch('/api/v1/student/major/:StudentMajorId', function(req, res) {
     major: req.body.major
   }, {
     where: {
-      StudentMajorId: req.params.StudentMajorId
+      id: req.params.StudentMajorId
     }
   }).then(function(studentMajor) {
     res.json({
@@ -210,7 +210,7 @@ router.patch('/api/v1/student/major/:StudentMajorId', function(req, res) {
 router.delete('/api/v1/student/major/:StudentMajorId', function(req, res) {
   models.StudentMajor.destroy({
     where: {
-      StudentMajorId: req.params.StudentMajorId
+      id: req.params.StudentMajorId
     }
   }).then(function(studentMajor) {
     res.json({

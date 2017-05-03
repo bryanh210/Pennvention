@@ -20,8 +20,8 @@ router.get('/api/v1/teams/judges', function(req, res) {
 });
 
 // Get all the judges for a team by their ID
-router.get('/api/v1/team/judges/:TeamId', function(req, res) {
-  models.Judge.findAll({
+router.get('/api/v1/team/judges/TeamId/:TeamId', function(req, res) {
+  models.TeamJudge.findAll({
     where: {
       TeamId: req.params.TeamId
     }
@@ -39,8 +39,8 @@ router.get('/api/v1/team/judges/:TeamId', function(req, res) {
 });
 
 // Get all the teams for a judge by their ID
-router.get('/api/v1/teams/judge/:JudgeId', function(req, res) {
-  models.Judge.findAll({
+router.get('/api/v1/teams/judge/JudgeId/:JudgeId', function(req, res) {
+  models.TeamJudge.findAll({
     where: {
       JudgeId: req.params.JudgeId
     }
@@ -57,7 +57,26 @@ router.get('/api/v1/teams/judge/:JudgeId', function(req, res) {
   });
 });
 
-// Create a new judge
+// Geta teamJudge by their ID
+router.get('/api/v1/team/judge/:TeamJudgeId', function(req, res) {
+  models.TeamJudge.findAll({
+    where: {
+      id: req.params.TeamJudgeId
+    }
+  }).then(function(teamsJudge) {
+    res.json({
+      success: true,
+      teamsJudge: teamsJudge
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Create a new team/judge pair
 router.post('/api/v1/team/judge/', function(req, res) {
   models.TeamJudge.create({
     TeamId: req.body.TeamId,
@@ -75,11 +94,11 @@ router.post('/api/v1/team/judge/', function(req, res) {
   });
 });
 
-// Delete a judge by their ID
+// Delete a team/judge pair by their ID
 router.delete('/api/v1/team/judge/:TeamJudgeId', function(req, res) {
   models.Judge.destroy({
     where: {
-      TeamJudgeId: req.params.TeamJudgeId
+      id: req.params.TeamJudgeId
     }
   }).then(function(teamJudge) {
     res.json({

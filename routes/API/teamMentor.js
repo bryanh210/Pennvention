@@ -20,8 +20,8 @@ router.get('/api/v1/teams/mentors', function(req, res) {
 });
 
 // Get all the mentors for a team by their ID
-router.get('/api/v1/team/mentors/:TeamId', function(req, res) {
-  models.Mentor.findAll({
+router.get('/api/v1/team/mentors/TeamId/:TeamId', function(req, res) {
+  models.TeamMentor.findAll({
     where: {
       TeamId: req.params.TeamId
     }
@@ -39,10 +39,29 @@ router.get('/api/v1/team/mentors/:TeamId', function(req, res) {
 });
 
 // Get all the teams for a mentor by their ID
-router.get('/api/v1/teams/mentor/:MentorId', function(req, res) {
-  models.Mentor.findAll({
+router.get('/api/v1/teams/mentor/MentorId/:MentorId', function(req, res) {
+  models.TeamMentor.findAll({
     where: {
       MentorId: req.params.MentorId
+    }
+  }).then(function(teamsMentor) {
+    res.json({
+      success: true,
+      teamsMentor: teamsMentor
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Get a the team/mentor pairs by their ID
+router.get('/api/v1/teams/mentor/:TeamMentorId', function(req, res) {
+  models.TeamMentor.findAll({
+    where: {
+      id: req.params.MentorId
     }
   }).then(function(teamsMentor) {
     res.json({
@@ -79,7 +98,7 @@ router.post('/api/v1/team/mentor/', function(req, res) {
 router.delete('/api/v1/team/mentor/:TeamMentorId', function(req, res) {
   models.Mentor.destroy({
     where: {
-      TeamMentorId: req.params.TeamMentorId
+      id: req.params.TeamMentorId
     }
   }).then(function(teamMentor) {
     res.json({

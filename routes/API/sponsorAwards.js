@@ -20,10 +20,29 @@ router.get('/api/v1/sponsorAwards', function(req, res) {
 });
 
 // Get all the teams with sponsor awards for a competition period
-router.get('/api/v1/sponsorAwards/:competitionPeriod', function(req, res) {
+router.get('/api/v1/sponsorAwards/competitionPeriod/:competitionPeriod', function(req, res) {
   models.SponsorAward.findAll({
     where: {
       competitionPeriod: req.params.competitionPeriod
+    }
+  }).then(function(sponsorAwards) {
+    res.json({
+      success: true,
+      sponsorAwards: sponsorAwards
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Get all the teams with sponsor awards by their id
+router.get('/api/v1/sponsorAwards/:SponsorAwardId', function(req, res) {
+  models.SponsorAward.findAll({
+    where: {
+      id: req.params.SponsorAwardId
     }
   }).then(function(sponsorAwards) {
     res.json({
@@ -67,7 +86,7 @@ router.post('/api/v1/sponsorAward/:SponsorAwardId', function(req, res) {
     rewardAmount: req.body.rewardAmount
   }, {
     where: {
-      SponsorAwardId: req.params.SponsorAwardId
+      id: req.params.SponsorAwardId
     }
   }).then(function(sponsorAward) {
     res.json({
@@ -86,7 +105,7 @@ router.post('/api/v1/sponsorAward/:SponsorAwardId', function(req, res) {
 router.delete('/api/v1/sponsorAward/:SponsorAwardId', function(req, res) {
   models.SponsorAward.destroy({
     where: {
-      SponsorAwardId: req.params.SponsorAwardId
+      id: req.params.SponsorAwardId
     }
   }).then(function(sponsorAward) {
     res.json({

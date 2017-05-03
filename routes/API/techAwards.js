@@ -20,10 +20,29 @@ router.get('/api/v1/techAwards', function(req, res) {
 });
 
 // Get all the teams with tech awards for a competition period
-router.get('/api/v1/techAwards/:competitionPeriod', function(req, res) {
+router.get('/api/v1/techAwards/competitionPeriod/:competitionPeriod', function(req, res) {
   models.TechAward.findAll({
     where: {
       competitionPeriod: req.params.competitionPeriod
+    }
+  }).then(function(techAwards) {
+    res.json({
+      success: true,
+      techAwards: techAwards
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Get all the teams with sponsor awards by their id
+router.get('/api/v1/techAwards/:TechAwardId', function(req, res) {
+  models.TechAward.findAll({
+    where: {
+      id: req.params.TechAwardId
     }
   }).then(function(techAwards) {
     res.json({
@@ -67,7 +86,7 @@ router.post('/api/v1/techAward/:TechAwardId', function(req, res) {
     rewardAmount: req.body.rewardAmount
   }, {
     where: {
-      TechAwardId: req.params.TechAwardId
+      id: req.params.TechAwardId
     }
   }).then(function(techAward) {
     res.json({
@@ -86,7 +105,7 @@ router.post('/api/v1/techAward/:TechAwardId', function(req, res) {
 router.delete('/api/v1/techAward/:TechAwardId', function(req, res) {
   models.TechAward.destroy({
     where: {
-      TechAwardId: req.params.TechAwardId
+      id: req.params.TechAwardId
     }
   }).then(function(techAward) {
     res.json({
