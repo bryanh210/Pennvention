@@ -21,17 +21,17 @@ var models = require('../models');
 
 
 
-router.get('/', function(req, res) {
-  models.User.findAll({
-    // include: [models.Task]
-  }).then(function(users) {
-    console.log(users);
-    res.render('index', {
-      title: 'Sequelize: Express Example',
-      users: users
-    });
-  });
-});
+// router.get('/', function(req, res) {
+//   models.User.findAll({
+//     // include: [models.Task]
+//   }).then(function(users) {
+//     console.log(users);
+//     res.render('index', {
+//       title: 'Sequelize: Express Example',
+//       users: users
+//     });
+//   });
+// });
 
 
 module.exports = router;

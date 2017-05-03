@@ -41,13 +41,13 @@ router.get('/api/v1/mentor/:MentorId', function(req, res) {
 // Create a new mentor
 router.post('/api/v1/mentor/', function(req, res) {
   models.Mentor.create({
-    id: req.user.id,
-    UserId: req.user.id, //NOT SURE IF WE WANT TO ALLOW THIS
-    firstName: req.body.firstName || '',
-    lastName: req.body.lastName || '',
-    phoneNumber: req.body.phoneNumber || '',
-    skypeUsername: req.body.skypeUsername || '',
-    biography: req.body.biography || '',
+    id: req.body.id,
+    UserId: req.body.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    phoneNumber: req.body.phoneNumber,
+    skypeUsername: req.body.skypeUsername,
+    biography: req.body.biography,
     approved: false
   }).then(function(mentor) {
     res.json({
@@ -185,7 +185,7 @@ router.get('/api/v1/mentor/expertises/MentorId/:MentorId', function(req, res) {
 // Create a new expertise for a mentor by their ID
 router.post('/api/v1/mentor/expertise', function(req, res) {
   models.MentorExpertise.create({
-    MentorId: req.query.MentorId || req.user.id, //NOT SURE IF WE WANT TO ALLOW THI
+    MentorId: req.query.MentorId || req.body.MentorId, //NOT SURE IF WE WANT TO ALLOW THI
     expertise: req.body.expertise
   }).then(function(mentorExpertise) {
     res.json({

@@ -14,12 +14,9 @@ var callbackURL = "http://localhost:3000" || config.DATABASE_URL || "http://loca
 module.exports = function(passport) {
 
   // GET registration page
-  // router.get('/login#signup', function(req, res) {
-  //   console.log('WTF', req.flash('error'))
-  //   res.render('login', {
-  //     message: req.flash('error')
-  //   });
-  // });
+  router.get('/register', function(req, res) {
+    res.redirect('login')
+  });
 
 
   // GET Login page
@@ -31,14 +28,126 @@ module.exports = function(passport) {
     });
   });
 
+  // GET Redirect Page - Checks to see what type of user is logged in.
   router.get('/redirect', function(req, res) {
     if (req.user.role === 'student') {
-      res.redirect('/user')
+
+      fetch(callbackURL + '/api/v1/student/' + req.user.id, {
+        method: 'GET'
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.success === false) {
+            // If table doesnt exist, create one and redirect to profile page.
+            fetch(callbackURL + '/api/v1/student', {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                id: req.user.id,
+                UserId: req.user.id
+              })
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (responseJson.success === true) {
+                res.redirect('/user/profile/edit');
+              } else {
+                res.redirect('/error')
+              }
+            })
+            .catch((err) => {
+              console.log('error', err)
+            })
+
+        } else {
+          res.redirect('/user/profile')
+        }
+      })
+      .catch((err) => {
+        console.log('error')
+      })
+
     }
     if (req.user.role === 'judge') {
-      res.redirect('/judge')
+
+      fetch(callbackURL + '/api/v1/judge/' + req.user.id, {
+        method: 'GET'
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.success === false) {
+            // If table doesnt exist, create one and redirect to profile page.
+            fetch(callbackURL + '/api/v1/judge', {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                id: req.user.id,
+                UserId: req.user.id
+              })
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (responseJson.success === true) {
+                res.redirect('/judge/profile_edit');
+              } else {
+                res.redirect('/error')
+              }
+            })
+            .catch((err) => {
+              console.log('error', err)
+            })
+
+        } else {
+          res.redirect('/judge/profile')
+        }
+      })
+      .catch((err) => {
+        console.log('error')
+      })
+
     }
     if (req.user.role === 'mentor') {
+
+      fetch(callbackURL + '/api/v1/mentor/' + req.user.id, {
+        method: 'GET'
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.success === false) {
+            // If table doesnt exist, create one and redirect to profile page.
+            fetch(callbackURL + '/api/v1/mentor', {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                id: req.user.id,
+                UserId: req.user.id
+              })
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+              if (responseJson.success === true) {
+                res.redirect('/mentor/profile_edit');
+              } else {
+                res.redirect('/error')
+              }
+            })
+            .catch((err) => {
+              console.log('error', err)
+            })
+
+        } else {
+          res.redirect('/mentor/profile')
+        }
+      })
+      .catch((err) => {
+        console.log('error')
+      })
       res.redirect('/mentor')
     }
     if (req.user.role === 'admin') {
@@ -52,12 +161,6 @@ module.exports = function(passport) {
     failureRedirect: '/login',
     failureFlash: true
   }));
-
-  // router.post('/login', function(req, res) {
-  //   console.log('TEST', req.body.loginEmail)
-  //   console.log('pass', req.body.loginPassword)
-  //   console.log('TEST', req.body)
-  // });
 
   // GET Logout page
   router.get('/logout', function(req, res) {
@@ -91,7 +194,6 @@ module.exports = function(passport) {
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.success === true) {
-        console.log("BEST")
         res.redirect('/login');
       } else {
         req.flash('registerError', responseJson.error.errors[0].message);

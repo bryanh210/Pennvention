@@ -16,10 +16,6 @@ border: 1px solid black;
 .teamInfo {
 border: 1px solid black;
 }
-.navbar-right {
-/*width: 5%;*/
-padding: 10px 0;
-}
 
 form.navbar-right, ul.navbar-right.navbar-nav {
 margin-right: 15px!important;

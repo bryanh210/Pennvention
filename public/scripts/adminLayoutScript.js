@@ -1017,8 +1017,14 @@ if (typeof NProgress != 'undefined') {
 
 				if(typeof $.fn.tagsInput !== 'undefined'){
 
-				$('#tags_1').tagsInput({
+        $('#tags_1').tagsInput({
 				  width: 'auto'
+				});
+
+				$('#tags_major_1').tagsInput({
+          height:'37px',
+				  width: 'auto',
+          defaultText:'add major',
 				});
 
 				}

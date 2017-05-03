@@ -1,17 +1,14 @@
 body {
   background-color: white;
 }
-  footer {
-       display: block;
-       position: fixed;
-       bottom: 0;
-  }
-<<<<<<< HEAD
-=======
-  .chai {
-    margin-top: 70px;
-  }
->>>>>>> 10226a630ebeb6617032872bfc4c3d65b4bda1e0
+footer {
+     display: block;
+     position: fixed;
+     bottom: 0;
+}
+.chai {
+  margin-top: 70px;
+}
 .navbar-default .navbar-nav>li>a {
   color: #fff;
 }

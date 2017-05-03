@@ -41,13 +41,13 @@ router.get('/api/v1/judge/:JudgeId', function(req, res) {
 // Create a new judge
 router.post('/api/v1/judge/', function(req, res) {
   models.Judge.create({
-    id: req.user.id,
-    UserId: req.user.id, //NOT SURE IF WE WANT TO ALLOW THIS
-    firstName: req.body.firstName || '',
-    lastName: req.body.lastName || '',
-    phoneNumber: req.body.phoneNumber || '',
-    skypeUsername: req.body.skypeUsername || '',
-    biography: req.body.biography || '',
+    id: req.body.id,
+    UserId: req.body.UserId, //NOT SURE IF WE WANT TO ALLOW THIS
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    phoneNumber: req.body.phoneNumber,
+    skypeUsername: req.body.skypeUsername,
+    biography: req.body.biography,
     approved: false
   }).then(function(judge) {
     res.json({
@@ -187,7 +187,7 @@ router.get('/api/v1/judge/expertises/JudgeId/:JudgeId', function(req, res) {
 // Create a new expertise for a judge by their ID
 router.post('/api/v1/judge/expertise', function(req, res) {
   models.JudgeExpertise.create({
-    JudgeId: req.query.JudgeId || req.user.id, //NOT SURE IF WE WANT TO ALLOW THI
+    JudgeId: req.query.JudgeId || req.body.JudgeId, //NOT SURE IF WE WANT TO ALLOW THI
     expertise: req.body.expertise
   }).then(function(judgeExpertise) {
     res.json({

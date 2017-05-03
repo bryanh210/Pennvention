@@ -78,14 +78,14 @@ passport.use(new LocalStrategy({
   usernameField: 'loginEmail',
   passwordField: 'loginPassword'
 }, function(username, password, done) {
-  console.log("Using LocalStrategy");
+  // console.log("Using LocalStrategy");
   model.User.findOne({
     where: {
       email: username
     }
   }).then(function(user) {
     if (user == null) {
-      console.log('test')
+      // console.log('test')
       return done(null, false, {
         message: 'Incorrect credentials.'
       })
@@ -94,10 +94,10 @@ passport.use(new LocalStrategy({
     var hashedPassword = bcrypt.hashSync(password, user.salt);
 
     if (user.hash === hashedPassword) {
-      console.log("correct password, logging in");
+      // console.log("correct password, logging in");
       return done(null, user)
     } else {
-      console.log("incorrect password");
+      // console.log("incorrect password");
     }
 
     return done(null, false, {
@@ -113,7 +113,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   model.User.findOne({where:{id: id}}).then(function (user) {
-    console.log(user);
+    // console.log(user);
     if (user == null) {
       done(new Error('Wrong user id.'))
     }

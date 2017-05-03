@@ -11,7 +11,6 @@ module.exports = function(sequelize, DataTypes) {
     phoneNumber: DataTypes.STRING,
     skypeUsername: DataTypes.STRING,
     typeOfStudent: DataTypes.STRING,
-    school: DataTypes.STRING,
     expectedYearOfGraduation: DataTypes.STRING
   }, {
     classMethods: {
@@ -19,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         Student.belongsTo(models.Team, {
           onDelete: "CASCADE",
           foreignKey: {
-            allowNull: false
+            allowNull: true
           }
         }),
         Student.belongsTo(models.User, {
@@ -28,7 +27,8 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
           }
         }),
-        Student.hasMany(models.StudentMajor)
+        Student.hasMany(models.StudentMajor),
+        Student.hasMany(models.StudentSchool)
       }
     }
   });
