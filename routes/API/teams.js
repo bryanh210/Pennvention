@@ -26,6 +26,11 @@ router.get('/api/v1/team/:TeamId', function(req, res) {
       id: req.params.TeamId
     }
   }).then(function(team) {
+    if (!team) {
+      req.json({
+        success: false
+      })
+    }
     res.json({
       success: true,
       team: team
@@ -240,10 +245,15 @@ router.get('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequestedI
     where: {
       id: req.params.TeamMentorExpertiseRequestedId
     }
-  }).then(function(teamCategory) {
+  }).then(function(teamMentorExpertiseRequested) {
+    if(!teamMentorExpertiseRequested) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
-      teamCategory: teamCategory
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested
     })
   }).catch(function(err) {
     res.json({
@@ -354,6 +364,11 @@ router.get('/api/v1/team/strengths/:TeamStrengthId', function(req, res) {
       id: req.params.TeamStrengthId
     }
   }).then(function(teamStrength) {
+    if(!teamStrength) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       teamStrength: teamStrength
@@ -467,6 +482,11 @@ router.get('/api/v1/team/weaknesses/:TeamWeaknessId', function(req, res) {
       id: req.params.TeamWeaknessId
     }
   }).then(function(teamWeakness) {
+    if(!teamWeakness) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       teamWeakness: teamWeakness

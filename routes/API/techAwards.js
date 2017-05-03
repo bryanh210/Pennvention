@@ -45,6 +45,11 @@ router.get('/api/v1/techAwards/:TechAwardId', function(req, res) {
       id: req.params.TechAwardId
     }
   }).then(function(techAwards) {
+    if (!techAwards) {
+      req.json({
+        success: false
+      })
+    }
     res.json({
       success: true,
       techAwards: techAwards

@@ -26,6 +26,11 @@ router.get('/api/v1/judge/:JudgeId', function(req, res) {
       id: req.params.JudgeId
     }
   }).then(function(judge) {
+    if(!judge) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       judge: judge
@@ -153,6 +158,11 @@ router.get('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
       id: req.params.JudgeExpertiseId
     }
   }).then(function(judgeExpertise) {
+    if(!judgeExpertise) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       judgeExpertise: judgeExpertise

@@ -45,6 +45,11 @@ router.get('/api/v1/iteration/:IterationId', function(req, res) {
       id: req.params.IterationId
     }
   }).then(function(iteration) {
+    if(!iteration) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       iteration: iteration
@@ -158,6 +163,11 @@ router.get('/api/v1/stage/:StageId', function(req, res) {
       id: req.params.StageId
     }
   }).then(function(stage) {
+    if(!stage) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       stage: stage
@@ -276,6 +286,11 @@ router.get('/api/v1/qualifyingTeam/:QualifyingTeamId', function(req, res) {
       id: req.params.QualifyingTeamId
     }
   }).then(function(qualifyingTeam) {
+    if(!qualifyingTeam) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       qualifyingTeam: qualifyingTeam

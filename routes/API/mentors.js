@@ -26,6 +26,11 @@ router.get('/api/v1/mentor/:MentorId', function(req, res) {
       id: req.params.MentorId
     }
   }).then(function(mentor) {
+    if(!mentor) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       mentor: mentor
@@ -151,6 +156,11 @@ router.get('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
       id: req.params.MentorExpertiseId
     }
   }).then(function(mentorExpertise) {
+    if(!mentorExpertise) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       mentorExpertise: mentorExpertise

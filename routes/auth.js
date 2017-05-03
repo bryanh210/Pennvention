@@ -52,7 +52,7 @@ module.exports = function(passport) {
             .then((response) => response.json())
             .then((responseJson) => {
               if (responseJson.success === true) {
-                res.redirect('/user/profile/edit');
+                res.redirect('/student/initial');
               } else {
                 res.redirect('/error')
               }
@@ -62,7 +62,7 @@ module.exports = function(passport) {
             })
 
         } else {
-          res.redirect('/user/profile')
+          res.redirect('/student/profile')
         }
       })
       .catch((err) => {
@@ -92,7 +92,7 @@ module.exports = function(passport) {
             .then((response) => response.json())
             .then((responseJson) => {
               if (responseJson.success === true) {
-                res.redirect('/judge/profile_edit');
+                res.redirect('/judge/initial');
               } else {
                 res.redirect('/error')
               }
@@ -132,7 +132,7 @@ module.exports = function(passport) {
             .then((response) => response.json())
             .then((responseJson) => {
               if (responseJson.success === true) {
-                res.redirect('/mentor/profile_edit');
+                res.redirect('/mentor/initial');
               } else {
                 res.redirect('/error')
               }

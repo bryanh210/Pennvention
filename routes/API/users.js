@@ -26,6 +26,11 @@ router.get('/api/v1/user/:UserId', function(req, res) {
       id: req.params.UserId
     }
   }).then(function(user) {
+    if (!user) {
+      req.json({
+        success: false
+      })
+    }
     res.json({
       success: true,
       user: user

@@ -64,6 +64,11 @@ router.get('/api/v1/teamScore/:TeamScoreId', function(req, res) {
       id: req.params.TeamScoreId
     }
   }).then(function(teamScore) {
+    if(!TeamScoreId) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       teamScore: teamScore
@@ -163,6 +168,11 @@ router.get('/api/v1/rubric/:RubricId', function(req, res) {
       id: req.params.RubricId
     }
   }).then(function(rubric) {
+    if(!rubric) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       rubric: rubric
@@ -273,6 +283,11 @@ router.get('/api/v1/question/:QuestionId', function(req, res) {
       id: req.params.QuestionId
     }
   }).then(function(question) {
+    if(!question) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       question: question
@@ -389,6 +404,11 @@ router.get('/api/v1/mark/:MarkId', function(req, res) {
       id: req.params.MarkId
     }
   }).then(function(mark) {
+    if(!mark) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       mark: mark

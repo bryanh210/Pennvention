@@ -64,6 +64,11 @@ router.get('/api/v1/teams/mentor/:TeamMentorId', function(req, res) {
       id: req.params.MentorId
     }
   }).then(function(teamsMentor) {
+    if(!teamsMentor) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       teamsMentor: teamsMentor

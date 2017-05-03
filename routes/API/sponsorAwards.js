@@ -45,6 +45,11 @@ router.get('/api/v1/sponsorAwards/:SponsorAwardId', function(req, res) {
       id: req.params.SponsorAwardId
     }
   }).then(function(sponsorAwards) {
+    if(!sponsorAwards) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       sponsorAwards: sponsorAwards

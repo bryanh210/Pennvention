@@ -21,11 +21,16 @@ router.get('/api/v1/students', function(req, res) {
 
 // Get properties of one student by their ID
 router.get('/api/v1/student/:StudentId', function(req, res) {
-  models.Student.findAll({
+  models.Student.findOne({
     where: {
-      StudentId: req.params.StudentId
+      id: req.params.StudentId
     }
   }).then(function(student) {
+    if(!student) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       student: student
@@ -135,6 +140,11 @@ router.get('/api/v1/student/major/:StudentMajorId', function(req, res) {
       id: req.params.StudentMajorId
     }
   }).then(function(studentMajor) {
+    if(!studentMajor) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       studentMajor: studentMajor
@@ -249,6 +259,11 @@ router.get('/api/v1/student/school/:StudentSchoolId', function(req, res) {
       id: req.params.StudentSchoolId
     }
   }).then(function(studentSchool) {
+    if(!studentSchool) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       studentSchool: studentSchool

@@ -64,6 +64,11 @@ router.get('/api/v1/team/judge/:TeamJudgeId', function(req, res) {
       id: req.params.TeamJudgeId
     }
   }).then(function(teamsJudge) {
+    if(!teamsJudge) {
+      res.json({
+        success: false,
+      })
+    }
     res.json({
       success: true,
       teamsJudge: teamsJudge

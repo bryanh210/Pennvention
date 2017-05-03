@@ -16,34 +16,57 @@ var callbackURL = "http://localhost:3000" || config.DATABASE_URL || "http://loca
 //////////////////////////////// PRIVATE ROUTES ////////////////////////////////
 // Only logged in users can see these routes
 
-// GET school index page
-router.get('/school', function(req, res, next) {
+// GET student index page
+router.get('/student', function(req, res, next) {
   res.render('student/profile', {
     layout: 'studentLayout'
   });
 });
 
-//GET school profile page
-router.get('/school/profile', function(req, res, next) {
+//GET student profile page
+router.get('/student/profile', function(req, res, next) {
   res.render('student/profile', {
     layout: 'studentLayout'
   });
 });
 
-//GET
+//GET student edit profile page
 router.get('/student/profile/edit', function(req, res, next) {
   res.render('student/profile_edit', {
     layout: 'studentLayout'
   });
 });
 
+//GET initial page for first time login.
 router.get('/student/initial', function(req, res, next) {
-  res.render('student/profile_edit_initial', {
-    layout: 'studentLayout'
-  });
+    // res.render('student/profile_edit_initial', {
+    //   layout: 'studentLayout'
+    // });
+
+  fetch(callbackURL + '/api/v1/student/' + req.user.id, {
+    method: 'GET'
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (responseJson.success === true) {
+      console.log(responseJson.student)
+      res.render('student/profile_edit_initial', {
+        layout: 'studentLayout',
+        student: responseJson.student
+      });
+    } else {
+      res.redirect('/login')
+    }
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
+
 });
 
 router.post('/student/initial', function(req, res, next) {
+
+  var majorArray = req.body.major.split(',')
 
   fetch(callbackURL + '/api/v1/student/' + req.user.id, {
     method: 'PATCH',
@@ -64,11 +87,60 @@ router.post('/student/initial', function(req, res, next) {
   .then((response) => response.json())
   .then((responseJson) => {
     if (responseJson.success === true) {
-      res.redirect('/student');
+      majorArray.forEach((major) =>
+        fetch(callbackURL + '/api/v1/student/major', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            StudentId: req.user.id,
+            major: major
+          })
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.success === true) {
+          } else {
+            req.flash('error', responseJson.error.errors[0].message);
+            res.redirect('/student/initial')
+          }
+        })
+        .catch((err) => {
+          console.log('error', err)
+        })
+      )
+      return({'success': true})
     } else {
       req.flash('error', responseJson.error.errors[0].message);
       res.redirect('/student/initial')
     }
+  })
+  .then((string) => {
+    req.body.school.forEach((school) =>
+      fetch(callbackURL + '/api/v1/student/school', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          StudentId: req.user.id,
+          school: school
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.success === true) {
+          res.redirect('/student')
+        } else {
+          req.flash('error', responseJson.error.errors[0].message);
+          res.redirect('/student/initial')
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    )
   })
   .catch((err) => {
     console.log('error', err)
