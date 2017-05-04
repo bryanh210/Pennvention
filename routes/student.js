@@ -84,7 +84,6 @@ router.get('/student/initial', function(req, res, next) {
       studentSchools: data.studentSchools.map((item) => item.school).join(),
     })
   })
-
 });
 
 // POST student data for the first time.
@@ -97,33 +96,193 @@ router.post('/student/initial', function(req, res, next) {
 });
 
 router.get('/student/team/search', function(req, res, next) {
-  res.render('student/team_search', {
-    layout: 'studentLayout'
-  });
+  // res.render('student/team_search', {
+  //   layout: 'studentLayout'
+  // });
 });
 
 router.get('/student/team/add_members', function(req, res, next) {
-  res.render('student/team_addMembers', {
-    layout: 'studentLayout'
-  });
+  // res.render('student/team_addMembers', {
+  //   layout: 'studentLayout'
+  // });
 });
 
 router.get('/student/team/profile', function(req, res, next) {
-  res.render('student/team_profile', {
-    layout: 'studentLayout'
-  });
+  getStudentData(req, res, {
+    studentId: req.user.id
+  }, function(studentData) {
+    getTeamData(req, res, {
+      teamId: studentData.student.TeamId
+    }, function(teamData) {
+      res.render('student/team_profile', {
+        layout: 'studentLayout',
+        user: req.user,
+        student: studentData.student,
+        team: teamData.team,
+        teamMentorExpertiseRequested: teamData.teamMentorExpertiseRequested.map((item) => item.expertise).join(),
+        teamStrengths: teamData.teamStrengths.map((item) => item.strength).join(),
+        teamWeaknesses: teamData.teamWeaknesses.map((item) => item.weakness).join(),
+        teamStudents: teamData.teamStudents
+      })
+    })
+  })
 });
 
 router.get('/student/team/profile/edit', function(req, res, next) {
-  res.render('student/teamEdit', {
-    layout: 'studentLayout'
-  });
+  getStudentData(req, res, {
+    studentId: req.user.id
+  }, function(studentData) {
+    getTeamData(req, res, {
+      teamId: studentData.student.TeamId
+    }, function(teamData) {
+      res.render('student/team_profile_edit', {
+        layout: 'studentLayout',
+        user: req.user,
+        student: studentData.student,
+        team: teamData.team,
+        teamMentorExpertiseRequested: teamData.teamMentorExpertiseRequested.map((item) => item.expertise).join(),
+        teamStrengths: teamData.teamStrengths.map((item) => item.strength).join(),
+        teamWeaknesses: teamData.teamWeaknesses.map((item) => item.weakness).join(),
+        teamStudents: teamData.teamStudents
+      })
+    })
+  })
 });
 
 router.get('/student/team/create', function(req, res, next) {
   res.render('student/team_create', {
     layout: 'studentLayout'
   });
+});
+
+// POST Create Team -- NEEDS TO BE UPDATED TO REFLECT ITERATIONS AUTOMATICALLY
+router.post('/student/team/create', function(req, res, next) {
+  fetch(callbackURL + '/api/v1/team', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      teamName: req.body.teamName,
+      projectName: req.body.projectName,
+      projectDescription: req.body.projectDescription,
+      deckLink: req.body.deckLink,
+      videoLink: req.body.videoLink,
+      password: req.body.password,
+      IterationId: req.body.IterationId // WILL NEED TO UPDATE THIS LATER
+    })
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (responseJson.success === true) {
+      fetch(callbackURL + '/api/v1/student/' + req.user.id, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          TeamId: responseJson.team.id
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!responseJson.success) {
+          req.flash('error', responseJson.error.errors[0].message);
+          res.redirect(failureLink)
+        }
+        return
+      })
+      .then(() => {
+        var strengthArray = req.body.strength.split(',')
+
+        return strengthArray.forEach((strength) =>
+          fetch(callbackURL + '/api/v1/team/strength', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              TeamId: responseJson.team.id,
+              strength: strength
+            })
+          })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            if (!responseJson.success) {
+              req.flash('error', responseJson.error.errors[0].message);
+              res.redirect(failureLink)
+            }
+          })
+          .catch((err) => {
+            console.log('error', err)
+          })
+        )
+      })
+      .then(() => {
+        var weaknessArray = req.body.weakness.split(',')
+
+        return weaknessArray.forEach((weakness) =>
+          fetch(callbackURL + '/api/v1/team/weakness', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              TeamId: responseJson.team.id,
+              weakness: weakness
+            })
+          })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            if (!responseJson.success) {
+              req.flash('error', responseJson.error.errors[0].message);
+              res.redirect(failureLink)
+            }
+          })
+          .catch((err) => {
+            console.log('error', err)
+          })
+        )
+      })
+      .then(() => {
+        if (!Array.isArray(req.body.expertise)) req.body.expertise = [req.body.expertise]
+        return req.body.expertise.forEach((expertise) =>
+          fetch(callbackURL + '/api/v1/team/mentorExpertiseRequested', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              TeamId: responseJson.team.id,
+              expertise: expertise
+            })
+          })
+          .then((response) => response.json())
+          .then((responseJson) => {
+            if (!responseJson.success) {
+              req.flash('error', responseJson.error.errors[0].message);
+              res.redirect(failureLink)
+            }
+          })
+          .catch((err) => {
+            console.log('error', err)
+          })
+        )
+      })
+      .then(() => {
+        res.redirect('/student/team/profile')
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+
+    } else {
+      res.redirect('/error')
+    }
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
 });
 
 router.get('/student/mentor', function(req, res, next) {
@@ -291,6 +450,7 @@ var updateStudentDataAndReturn = function(req, res, {
     )
   })
   .then(() => {
+    if (!Array.isArray(req.body.school)) {req.body.school = [req.body.school]}
     return req.body.school.forEach((school) =>
       fetch(callbackURL + '/api/v1/student/school', {
         method: 'POST',
@@ -413,8 +573,6 @@ var getTeamData = function(req, res, {
     console.log('error', err)
   })
 }
-
-
 
 var updateTeamDataAndReturn = function(req, res, {
   successLink: successLink,
@@ -542,7 +700,8 @@ var updateTeamDataAndReturn = function(req, res, {
     )
   })
   .then(() => {
-    return req.body.expertise.forEach((school) =>
+    if (!Array.isArray(req.body.expertise)) req.body.expertise = [req.body.expertise]
+    return req.body.expertise.forEach((expertise) =>
       fetch(callbackURL + '/api/v1/student/school', {
         method: 'POST',
         headers: {

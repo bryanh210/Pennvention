@@ -49,10 +49,10 @@ router.post('/api/v1/team', function(req, res) {
     teamName: req.body.teamName,
     projectName: req.body.projectName,
     projectDescription: req.body.projectDescription,
-    deckLink: req.body.slideDeckLink,
+    deckLink: req.body.deckLink,
     videoLink: req.body.videoLink,
     password: req.body.password,
-    IterationId: req.body.IterationId || 1
+    IterationId: req.body.IterationId // WILL NEED TO UPDATE THIS LATER
   }).then(function(team) {
     res.json({
       success: true,
@@ -72,7 +72,7 @@ router.patch('/api/v1/team/:TeamId', function(req, res) {
     teamName: req.body.teamName,
     projectName: req.body.projectName,
     projectDescription: req.body.projectDescription,
-    deckLink: req.body.slideDeckLink,
+    deckLink: req.body.deckLink,
     videoLink: req.body.videoLink,
     password: req.body.password
   }, {
@@ -269,11 +269,11 @@ router.get('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequestedI
 router.post('/api/v1/team/mentorExpertiseRequested', function(req, res) {
   models.TeamMentorExpertiseRequested.create({
     TeamId: req.body.TeamId, // MIGHT NEED TO CONSIDER HOW TO GET THIS INFORMATION
-    expertise: expertise
-  }).then(function(teamCategory) {
+    expertise: req.body.expertise
+  }).then(function(teamMentorExpertiseRequested) {
     res.json({
       success: true,
-      teamCategory: teamCategory
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested
     })
   }).catch(function(err) {
     res.json({
@@ -286,15 +286,15 @@ router.post('/api/v1/team/mentorExpertiseRequested', function(req, res) {
 // Update a mentorExpertiseRequested for a team by their ID
 router.patch('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequestedId', function(req, res) {
   models.TeamMentorExpertiseRequested.update({
-    expertise: expertise
+    expertise: req.body.expertise
   }, {
     where: {
       id: req.params.TeamMentorExpertiseRequestedId
     }
-  }).then(function(teamCategory) {
+  }).then(function(teamMentorExpertiseRequested) {
     res.json({
       success: true,
-      teamCategory: teamCategory
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested
     })
   }).catch(function(err) {
     res.json({
@@ -310,10 +310,10 @@ router.delete('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequest
     where: {
       id: req.params.TeamMentorExpertiseRequestedid
     }
-  }).then(function(teamCategory) {
+  }).then(function(teamMentorExpertiseRequested) {
     res.json({
       success: true,
-      teamCategory: teamCategory
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested
     })
   }).catch(function(err) {
     res.json({
@@ -329,10 +329,10 @@ router.delete('/api/v1/team/mentorExpertiseRequested/TeamId/:TeamId', function(r
     where: {
       TeamId: req.params.TeamId
     }
-  }).then(function(teamCategory) {
+  }).then(function(teamMentorExpertiseRequested) {
     res.json({
       success: true,
-      teamCategory: teamCategory
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested
     })
   }).catch(function(err) {
     res.json({

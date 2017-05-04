@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
         Team.belongsTo(models.Iteration, {
           onDelete: "CASCADE",
           foreignKey: {
-            allowNull: false
+            allowNull: true //WILL NEED TO FIX THIS LATER WHEN WE IMPLEMENT ITERATIONS
           }
         }),
         Team.hasMany(models.TeamStrength),

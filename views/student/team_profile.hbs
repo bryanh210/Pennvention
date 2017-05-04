@@ -1,0 +1,69 @@
+{{#if student.TeamId}}
+{{else}}
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="x_panel">
+    <div class="x_content">
+      <div class="col-xs-12">
+        <h1>You are currently not in a team!</h1>
+        <a href="/student/team/create" class="col-md-6 col-sm-6 col-xs-12">Create a new team</a>
+        <a href="/student/team/searcg" class="col-md-6 col-sm-6 col-xs-12">Join an existing team</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="x_panel">
+
+    <div class="x_title">
+      <h2>Your Profile<small>User profile</small></h2>
+
+      <ul class="nav navbar-right panel_toolbox">
+        <li><a href="/student/team/profile/edit">Edit</a></li>
+        </li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+
+    <div class="col-xs-12">
+      <div class="form-horizontal form-label-left">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">Team Name</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p style="border: 0px solid grey">{{team.teamName}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Project Name</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p>{{team.projectName}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">Project Description</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p>{{team.projectDescription}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="skypeUsername">Deck Link</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p>{{team.deckLink}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="typeOfStudent">VideoLink</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p>{{team.videoLink}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Categories Requested</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p>{{teamMentorExpertiseRequested}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="expectedYearOfGraduation">Strengths</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p>{{teamStrengths}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Weaknesses</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 form-control-hidden">
+          <p>{{teamWeaknesses}}</p>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</div>
