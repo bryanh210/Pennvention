@@ -5,49 +5,58 @@
     </div>
     <div class="col-md-12">
       <div class="col-sm-8 col-sm-offset-2">
-<!--   panel body -->
-      <div class="panel panel-default" id="mentor-form">
-        <div class="panel-body" >
-    <!--       start form -->
-          <form class="form-horizontal" action="/register" method="post">
-<!--               first name -->
-            <div class="form-group">
-              <label class="col-sm-3 control-label">First Name</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
+        <!--   panel body -->
+        <div class="panel panel-default" id="mentor-form">
+          <div class="panel-body" >
+            <!--       start form -->
+            <form class="form-horizontal" method="post" action="/judge/judgeForm">
+              <!--               first name -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">firstName</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
+                </div>
               </div>
-            </div>
-    <!--         last name -->
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Last Name</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+              <!--         last name -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">lastName</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+                </div>
               </div>
-            </div>
-    <!--         Phone Number -->
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Phone Number</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control" placeholder="(911)-911-9111" name="password" required>
+              <!--         Phone Number -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">phoneNumber</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="(911)-911-9111" name="phoneNumber" required>
+                </div>
               </div>
-            </div>
 
-    <!--         bio -->
-            <div class="form-group">
-              <label class="col-sm-3 control-label">Biography</label>
-              <div class="col-sm-9">
-                <textarea class="form-control" name="bio" placeholder="Biography"></textarea>
+              <!--         skype username -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">skypeUsername</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="skype username" name="skypeUsername" required>
+                </div>
               </div>
-            </div>
-  <!--               submit -->
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-          </form>
-<!--           form end -->
+
+              <!--         bio -->
+              <div class="form-group">
+                <label class="col-sm-3 control-label">biography</label>
+                <div class="col-sm-9">
+                  <textarea class="form-control" name="bio" placeholder="Biography"></textarea>
+                </div>
+              </div>
+              <!--               submit -->
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+            <!--           form end -->
+          </div>
         </div>
+        <!--       panel end -->
       </div>
-<!--       panel end -->
     </div>
-    </div>
+  </div>
 </div>

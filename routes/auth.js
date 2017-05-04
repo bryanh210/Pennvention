@@ -92,7 +92,7 @@ module.exports = function(passport) {
             .then((response) => response.json())
             .then((responseJson) => {
               if (responseJson.success === true) {
-                res.redirect('/judge/initial');
+                res.redirect('/judge/judgeForm');
               } else {
                 res.redirect('/error')
               }
@@ -102,7 +102,7 @@ module.exports = function(passport) {
             })
 
         } else {
-          res.redirect('/judge/profile')
+          res.redirect('/judge')
         }
       })
       .catch((err) => {
