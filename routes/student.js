@@ -4,7 +4,7 @@ var router  = express.Router();
 
 var fetch = require('node-fetch');
 var config = require('../config.js');
-var callbackURL = config.CALLBACK_URL || "http://localhost:3000"
+var callbackURL = config.CALLBACK_URL || process.env.CALLBACK_URL || "http://localhost:3000"
 
 // router.use(function(req, res, next){
 //   if (!req.user) { //add middleware to check to see if usertype is student
