@@ -46,11 +46,12 @@ router.get('/api/v1/team/:TeamId', function(req, res) {
 // Create a new team
 router.post('/api/v1/team', function(req, res) {
   models.Team.create({
-    name: req.body.name,
+    teamName: req.body.teamName,
     projectName: req.body.projectName,
     projectDescription: req.body.projectDescription,
-    deckLink: req.body.slideDeckLink, // MIGHT HAVE TO UPDATE IF WE WANT MULTIPLE LINKS/FILE UPLOAD
-    videoLink: req.body.videoLink, // MIGHT HAVE TO UPDATE IF WE WANT MULTIPLE LINKS/FILE UPLOAD
+    deckLink: req.body.slideDeckLink,
+    videoLink: req.body.videoLink,
+    password: req.body.password,
     IterationId: req.body.IterationId || 1
   }).then(function(team) {
     res.json({
@@ -68,11 +69,12 @@ router.post('/api/v1/team', function(req, res) {
 // Update properties of a team by their ID
 router.patch('/api/v1/team/:TeamId', function(req, res) {
   models.Team.update({
-    name: req.body.name,
+    teamName: req.body.teamName,
     projectName: req.body.projectName,
     projectDescription: req.body.projectDescription,
     deckLink: req.body.slideDeckLink,
-    videoLink: req.body.videoLink
+    videoLink: req.body.videoLink,
+    password: req.body.password
   }, {
     where: {
       id: req.params.TeamId
@@ -185,7 +187,7 @@ router.patch('/api/v1/team/logo/:TeamId', function(req, res) {
 });
 
 // Delete a logo for a team by their ID
-router.delete('/api/v1/team/:TeamId', function(req, res) {
+router.delete('/api/v1/team/logo/:TeamId', function(req, res) {
   models.TeamLogo.destroy({
     where: {
       id: req.params.Teamid
@@ -207,10 +209,10 @@ router.delete('/api/v1/team/:TeamId', function(req, res) {
 
 // Get the mentorExpertiseRequested for all teams
 router.get('/api/v1/teams/mentorExpertiseRequested', function(req, res) {
-  models.TeamMentorExpertiseRequested.findAll().then(function(teamsCategory) {
+  models.TeamMentorExpertiseRequested.findAll().then(function(teamMentorExpertiseRequested) {
     res.json({
       success: true,
-      teamsCategory: teamsCategory
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested
     })
   }).catch(function(err) {
     res.json({
@@ -226,10 +228,10 @@ router.get('/api/v1/team/mentorExpertiseRequested/TeamId/:TeamId', function(req,
     where: {
       TeamId: req.params.TeamId
     }
-  }).then(function(teamCategories) {
+  }).then(function(teamMentorExpertiseRequested) {
     res.json({
       success: true,
-      teamCategories: teamCategories
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested
     })
   }).catch(function(err) {
     res.json({
@@ -303,10 +305,29 @@ router.patch('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequeste
 });
 
 // Delete a mentorExpertiseRequested for a team by their ID
-router.delete('/api/v1/team/:TeamMentorExpertiseRequestedId', function(req, res) {
+router.delete('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequestedId', function(req, res) {
   models.TeamMentorExpertiseRequested.destroy({
     where: {
-      i: req.params.TeamMentorExpertiseRequestedid
+      id: req.params.TeamMentorExpertiseRequestedid
+    }
+  }).then(function(teamCategory) {
+    res.json({
+      success: true,
+      teamCategory: teamCategory
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Delete all mentorExpertiseRequested for a team by their ID
+router.delete('/api/v1/team/mentorExpertiseRequested/TeamId/:TeamId', function(req, res) {
+  models.TeamMentorExpertiseRequested.destroy({
+    where: {
+      TeamId: req.params.TeamId
     }
   }).then(function(teamCategory) {
     res.json({
@@ -421,10 +442,29 @@ router.patch('/api/v1/team/strength/:TeamStrengthId', function(req, res) {
 });
 
 // Delete a strength for a team by their ID
-router.delete('/api/v1/team/:TeamStrengthId', function(req, res) {
+router.delete('/api/v1/team/strength/:TeamStrengthId', function(req, res) {
   models.TeamStrength.destroy({
     where: {
       id: req.params.TeamStrengthid
+    }
+  }).then(function(teamStrength) {
+    res.json({
+      success: true,
+      teamStrength: teamStrength
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Delete all the strengths for a team by their ID
+router.delete('/api/v1/team/strengths/TeamId/:TeamId', function(req, res) {
+  models.TeamStrength.destroy({
+    where: {
+      TeamId: req.params.TeamId
     }
   }).then(function(teamStrength) {
     res.json({
@@ -539,10 +579,29 @@ router.patch('/api/v1/team/weakness/:TeamWeaknessId', function(req, res) {
 });
 
 // Delete a weakness for a team by their ID
-router.delete('/api/v1/team/:TeamWeaknessId', function(req, res) {
+router.delete('/api/v1/team/weakness/:TeamWeaknessId', function(req, res) {
   models.TeamWeakness.destroy({
     where: {
       id: req.params.TeamWeaknessid
+    }
+  }).then(function(teamWeakness) {
+    res.json({
+      success: true,
+      teamWeakness: teamWeakness
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Delete a weakness for a team by their ID
+router.delete('/api/v1/team/weaknesses/teamId/:TeamId', function(req, res) {
+  models.TeamWeakness.destroy({
+    where: {
+      TeamId: req.params.TeamId
     }
   }).then(function(teamWeakness) {
     res.json({

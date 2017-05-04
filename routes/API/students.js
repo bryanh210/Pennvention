@@ -43,6 +43,54 @@ router.get('/api/v1/student/:StudentId', function(req, res) {
   });
 });
 
+// Get all students in a team by TeamId
+router.get('/api/v1/students/TeamId/:TeamId', function(req, res) {
+  models.Student.findAll({
+    where: {
+      TeamId: req.params.TeamId
+    }
+  }).then(function(students) {
+    if(!student) {
+      res.json({
+        success: false,
+      })
+    }
+    res.json({
+      success: true,
+      students: students
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Get all students in a team by TeamId
+router.get('/api/v1/student/TeamId/:TeamId', function(req, res) {
+  models.Student.findOne({
+    where: {
+      TeamId: req.params.TeamId
+    }
+  }).then(function(student) {
+    if(!student) {
+      res.json({
+        success: false,
+      })
+    }
+    res.json({
+      success: true,
+      student: student
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
 // Create a new student
 router.post('/api/v1/student/', function(req, res) {
   models.Student.create({

@@ -24,51 +24,56 @@
 
         <br>
 
-        <form method="post" action="/student/initial" id="profile_edit" data-parsley-validate class="form-horizontal form-label-left">
+        <form method="post" action="/student/team/create" id="profile_edit" data-parsley-validate class="form-horizontal form-label-left">
 
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="teamName">Team Name <span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <input name="teamName" type="text" required="required" class="form-control col-md-7 col-xs-12" value={{student.firstName}}>
+              <input name="teamName" type="text" required="required" class="form-control col-md-7 col-xs-12" value={{team.teamName}}>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="projectName">Project Name <span class="required">*</span>
             </label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <input name="projectName" type="text" required="required" class="form-control col-md-7 col-xs-12" value={{student.lastName}}>
+              <input name="projectName" type="text" required="required" class="form-control col-md-7 col-xs-12" value={{team.projectName}}>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">Project Description</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <textarea name="projectDescription" class="form-control col-md-7 col-xs-12" type="text" value={{student.phoneNumber}}></textarea>
+              <textarea name="projectDescription" class="form-control col-md-7 col-xs-12" type="text" value={{team.projectDescription}}></textarea>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="skypeUsername">Team Password <span class="required">*</span></label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">Team Password <span class="required">*</span></label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <input name="skypeUsername" type="password" required="required"  class="form-control col-md-7 col-xs-12" value={{student.skypeUsername}}>
+              <input name="password" type="password" required="required"  class="form-control col-md-7 col-xs-12" value={{team.password}}>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Mentor Expertise Request</label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="expertise">Mentor Expertise Request</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <select name="school" class="select2_multiple form-control" multiple="multiple">
-                <option {{#contains studentSchools 'seas'}}selected{{/contains}} value="seas">Finance</option>
-                <option {{#contains studentSchools 'seas'}}selected{{/contains}} value="seas">Business</option>
-                <option {{#contains studentSchools 'seas'}}selected{{/contains}} value="seas">Entrepeneurship</option>
-                <option {{#contains studentSchools 'seas'}}selected{{/contains}} value="seas">Technology</option>
-                <option {{#contains studentSchools 'seas'}}selected{{/contains}} value="seas">Biology</option>
+              <select name="expertise" class="select2_multiple form-control" multiple="multiple">
+                <option {{#contains teamMentorExpertiseRequested 'finance'}}selected{{/contains}} value="finance">Finance</option>
+                <option {{#contains teamMentorExpertiseRequested 'business'}}selected{{/contains}} value="business">Business</option>
+                <option {{#contains teamMentorExpertiseRequested 'entrepreneurship'}}selected{{/contains}} value="entrepreneurship">Entrepreneurship</option>
+                <option {{#contains teamMentorExpertiseRequested 'technology'}}selected{{/contains}} value="technology">Technology</option>
+                <option {{#contains teamMentorExpertiseRequested 'biology'}}selected{{/contains}} value="biology">Biology</option>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Majors</label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="strength">Team Strengths</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <input name="major" id="tags_major_1" type="text" class="tags form-control" value="{{studentMajors}}" />
-              <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+              <input name="strength" id="tags_team_strength_1" type="text" class="tags form-control" value="{{teamStrengths}}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="weakness">Team Weaknesses</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input name="weakness" id="tags_team_weakness_1" type="text" class="tags form-control" value="{{teamWeaknesses}}" />
             </div>
           </div>
 

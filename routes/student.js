@@ -274,7 +274,7 @@ var updateStudentDataAndReturn = function(req, res, {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          StudentId: req.user.id,
+          StudentId: studentId,
           major: major
         })
       })
@@ -298,8 +298,259 @@ var updateStudentDataAndReturn = function(req, res, {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          StudentId: req.user.id,
+          StudentId: studentId,
           school: school
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!responseJson.success) {
+          req.flash('error', responseJson.error.errors[0].message);
+          res.redirect(failureLink)
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    )
+  })
+  .then(() => {
+    res.redirect(successLink)
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
+
+}
+
+var getTeamData = function(req, res, {
+  teamId: teamId
+}, fn) {
+  var team
+  var teamMentorExpertiseRequested
+  var teamStrengths
+  var teamWeaknesses
+  var teamStudents
+  fetch(callbackURL + '/api/v1/team/' + teamId, {
+    method: 'GET'
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (responseJson.success === true) {
+      team = responseJson.team
+      return ({'success': true})
+    }
+  }).then(() => {
+    return fetch(callbackURL + '/api/v1/team/mentorExpertiseRequested/TeamId/' + teamId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        teamMentorExpertiseRequested = responseJson.teamMentorExpertiseRequested
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/team/weaknesses/TeamId/' + teamId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        teamWeaknesses = responseJson.teamWeaknesses
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/team/strengths/TeamId/' + teamId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        teamStrengths = responseJson.teamStrengths
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/students/TeamId/' + teamId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        teamStudents = responseJson.students
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    fn( {
+      team: team,
+      teamMentorExpertiseRequested: teamMentorExpertiseRequested,
+      teamStrengths: teamStrengths,
+      teamWeaknesses: teamWeaknesses,
+      teamStudents: teamStudents
+    } )
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
+}
+
+
+
+var updateTeamDataAndReturn = function(req, res, {
+  successLink: successLink,
+  teamId: teamId,
+  failureLink: failureLink
+}) {
+
+  fetch(callbackURL + '/api/v1/team/' + teamId, {
+    method: 'PATCH',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      teamName: req.body.teamName,
+      projectName: req.body.projectName,
+      projectDescription: req.body.projectDescription,
+      deckLink: req.body.slideDeckLink,
+      videoLink: req.body.videoLink,
+      password: req.body.password
+    })
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (!responseJson.success) {
+      req.flash('error', responseJson.error.errors[0].message);
+      res.redirect(failureLink)
+    }
+    return
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/team/mentorExpertiseRequested/TeamId/' + teamId, {
+      method: 'DELETE',
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (!responseJson.success) {
+        req.flash('error', responseJson.error.errors[0].message);
+        res.redirect(failureLink)
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/team/strengths/TeamId/' + teamId, {
+      method: 'DELETE',
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (!responseJson.success) {
+        req.flash('error', responseJson.error.errors[0].message);
+        res.redirect(failureLink)
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/team/weaknesses/teamId/' + teamId, {
+      method: 'DELETE',
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (!responseJson.success) {
+        req.flash('error', responseJson.error.errors[0].message);
+        res.redirect(failureLink)
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    var strengthArray = req.body.strength.split(',')
+
+    return strengthArray.forEach((strength) =>
+      fetch(callbackURL + '/api/v1/team/strength', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          TeamId: teamId,
+          strength: strength
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!responseJson.success) {
+          req.flash('error', responseJson.error.errors[0].message);
+          res.redirect(failureLink)
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    )
+  })
+  .then(() => {
+    var weaknessArray = req.body.weakness.split(',')
+
+    return weaknessArray.forEach((weakness) =>
+      fetch(callbackURL + '/api/v1/team/weakness', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          TeamId: teamId,
+          weakness: weakness
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!responseJson.success) {
+          req.flash('error', responseJson.error.errors[0].message);
+          res.redirect(failureLink)
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    )
+  })
+  .then(() => {
+    return req.body.expertise.forEach((school) =>
+      fetch(callbackURL + '/api/v1/student/school', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          TeamId: teamId,
+          expertise: expertise
         })
       })
       .then((response) => response.json())
