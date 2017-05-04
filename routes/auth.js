@@ -9,7 +9,7 @@ var config = require('../config.js');
 var LocalStrategy = require('passport-local').Strategy;
 
 var fetch = require('node-fetch');
-var callbackURL = config.DATABASE_URL || "http://localhost:3000"
+var callbackURL = config.CALLBACK_URL || "http://localhost:3000"
 
 module.exports = function(passport) {
 
