@@ -19,10 +19,15 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "username": "vvsvbpnynhddtz",
+    "password": "b0f290ecc6ec98b81607adff9b196f789564c51447627df1331bc98f9b8cdec2",
+    "database": "d4gpfahvgooar1",
+    "host": "ec2-23-21-220-167.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "protocol": "postgres",
+    "port": 5432,
+    "dialectOptions": {
+      "ssl": true
+    }
   }
 }
