@@ -44,8 +44,10 @@ app.set('view engine', 'hbs');
 
 // handlebars setup
 var exphbs = require('express-handlebars');
+var helpers = require('handlebars-helpers')()
 app.engine('.hbs', exphbs({
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers: helpers
 }));
 
 // uncomment after placing your favicon in /public

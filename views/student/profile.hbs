@@ -1,44 +1,59 @@
-<div class="container">
-  <div class="row" id="forms">
-    <div class="col-md-12">
-    </div>
-    <form>
-      <div class="col-md-12">
-        <div class="col-sm-8 col-sm-offset-2">
 
-          <!--               first name -->
-          <div class="input-group input-group-md">
-            <span class="input-group-addon" id="basic-addon1">First Name</span>
-            <input type="text" class="form-control" value={{{student.firstName}}}>
-          </div>
-          <br/>
-          <div class="input-group input-group-md">
-            <span class="input-group-addon" id="basic-addon1">Last Name</span>
-            <input type="text" class="form-control" value={{{student.lastName}}}>
-          </div>
-          <br/>
-          <div class="input-group input-group-md">
-            <span class="input-group-addon" id="basic-addon1">Phone num</span>
-            <input type="text" class="form-control" value={{{student.phoneNumber}}}>
-          </div>
-          <br/>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Skype ID</span>
-            <input type="text" class="form-control" value={{{student.skypeID}}}>
-          </div>
-          <br/>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">Biography</span>
-            <input type="text" class="form-control" value={{{student.bio}}}>
-          </div>
-          <br/>
-        </form>
-          <!--               submit -->
-          <div class="col-sm-12 col-sm-offset-4">
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
-        </div>
-        <!--       panel end -->
+<div class="right_col" role="main">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+
+      <div class="x_title">
+        <h2>Your Profile<small>Displays user profile information</small></h2>
+
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings 1</a>
+              </li>
+              <li><a href="#">Settings 2</a>
+              </li>
+            </ul>
+          </li>
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
       </div>
+      <div class="x_content">
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <!-- <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar"> -->
+          <!-- <div style="background-color: red; width: 100%; padding-top: 100%;"></div> -->
+          <h3>{{student.firstName}} {{student.lastName}}</h3>
+          <ul class="list-unstyled user_data">
+            <li>
+              <i class="fa fa-mobile user-profile-icon"></i> {{student.phoneNumber}}
+            </li>
+
+            <li>
+              <i class="fa fa-envelope user-profile-icon"></i> email@email.com
+            </li>
+
+            <li class="m-top-xs">
+              <i class="fa fa-external-link user-profile-icon"></i>
+              <a href="http://www.JaneBae.com/profile/" target="_blank">www.TeamSite.com</a>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="col-md-8 col-sm-8 col-xs-12">
+          <h2>Biography</h2>
+        </p>
+        <p class="text-muted font-13 m-b-30">
+          Hi
+      </div>
+
     </div>
   </div>
+</div>
+</div>

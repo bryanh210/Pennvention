@@ -235,6 +235,25 @@ router.delete('/api/v1/student/major/:StudentMajorId', function(req, res) {
   });
 });
 
+// Delete all majors for a student by their id
+router.delete('/api/v1/student/majors/StudentId/:StudentId', function(req, res) {
+  models.StudentMajor.destroy({
+    where: {
+      StudentId: req.params.StudentId
+    }
+  }).then(function(studentMajor) {
+    res.json({
+      success: true,
+      studentMajor: studentMajor
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
 // StudentSchool Routes
 
 // Get all schools for all students
@@ -340,6 +359,25 @@ router.delete('/api/v1/student/school/:StudentSchoolId', function(req, res) {
   models.StudentSchool.destroy({
     where: {
       id: req.params.StudentSchoolId
+    }
+  }).then(function(studentSchool) {
+    res.json({
+      success: true,
+      studentSchool: studentSchool
+    })
+  }).catch(function(err) {
+    res.json({
+      success: false,
+      error: err
+    })
+  });
+});
+
+// Delete all schools for a student by their id
+router.delete('/api/v1/student/schools/StudentId/:StudentId', function(req, res) {
+  models.StudentSchool.destroy({
+    where: {
+      StudentId: req.params.StudentId
     }
   }).then(function(studentSchool) {
     res.json({

@@ -18,134 +18,78 @@ var callbackURL = "http://localhost:3000" || config.DATABASE_URL || "http://loca
 
 // GET student index page
 router.get('/student', function(req, res, next) {
-  res.render('student/profile', {
-    layout: 'studentLayout'
-  });
-});
-
-//GET student profile page
-router.get('/student/profile', function(req, res, next) {
-  res.render('student/profile', {
-    layout: 'studentLayout'
-  });
-});
-
-//GET student edit profile page
-router.get('/student/profile/edit', function(req, res, next) {
-  res.render('student/profile_edit', {
-    layout: 'studentLayout'
-  });
-});
-
-//GET initial page for first time login.
-router.get('/student/initial', function(req, res, next) {
-    // res.render('student/profile_edit_initial', {
-    //   layout: 'studentLayout'
-    // });
-
-  fetch(callbackURL + '/api/v1/student/' + req.user.id, {
-    method: 'GET'
-  })
-  .then((response) => response.json())
-  .then((responseJson) => {
-    if (responseJson.success === true) {
-      console.log(responseJson.student)
-      res.render('student/profile_edit_initial', {
-        layout: 'studentLayout',
-        student: responseJson.student
-      });
-    } else {
-      res.redirect('/login')
-    }
-  })
-  .catch((err) => {
-    console.log('error', err)
-  })
-
-});
-
-router.post('/student/initial', function(req, res, next) {
-
-  var majorArray = req.body.major.split(',')
-
-  fetch(callbackURL + '/api/v1/student/' + req.user.id, {
-    method: 'PATCH',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      phoneNumber: req.body.phoneNumber,
-      skypeUsername: req.body.skypeUsername,
-      typeOfStudent: req.body.typeOfStudent,
-      school: req.body.school,
-      expectedYearOfGraduation: req.body.expectedYearOfGraduation,
-      TeamId: req.body.TeamId
+  getStudentData(req, res, {
+    studentId: req.user.id
+  }, function(data) {
+    res.render('student/profile', {
+      layout: 'studentLayout',
+      student: data.student,
+      studentMajors: data.studentMajors.map((item) => item.major).join(),
+      studentSchools: data.studentSchools.map((item) => item.school).join(),
     })
   })
-  .then((response) => response.json())
-  .then((responseJson) => {
-    if (responseJson.success === true) {
-      majorArray.forEach((major) =>
-        fetch(callbackURL + '/api/v1/student/major', {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            StudentId: req.user.id,
-            major: major
-          })
-        })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          if (responseJson.success === true) {
-          } else {
-            req.flash('error', responseJson.error.errors[0].message);
-            res.redirect('/student/initial')
-          }
-        })
-        .catch((err) => {
-          console.log('error', err)
-        })
-      )
-      return({'success': true})
-    } else {
-      req.flash('error', responseJson.error.errors[0].message);
-      res.redirect('/student/initial')
-    }
+});
+
+// GET student profile page
+router.get('/student/profile', function(req, res, next) {
+  getStudentData(req, res, {
+    studentId: req.user.id
+  }, function(data) {
+    res.render('student/profile', {
+      layout: 'studentLayout',
+      student: data.student,
+      studentMajors: data.studentMajors.map((item) => item.major).join(),
+      studentSchools: data.studentSchools.map((item) => item.school).join(),
+    })
   })
-  .then((string) => {
-    req.body.school.forEach((school) =>
-      fetch(callbackURL + '/api/v1/student/school', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          StudentId: req.user.id,
-          school: school
-        })
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.success === true) {
-          res.redirect('/student')
-        } else {
-          req.flash('error', responseJson.error.errors[0].message);
-          res.redirect('/student/initial')
-        }
-      })
-      .catch((err) => {
-        console.log('error', err)
-      })
-    )
+});
+
+// GET student edit profile page
+router.get('/student/profile/edit', function(req, res, next) {
+  getStudentData(req, res, {
+    studentId: req.user.id
+  }, function(data) {
+    res.render('student/profile_edit', {
+      layout: 'studentLayout',
+      student: data.student,
+      studentMajors: data.studentMajors.map((item) => item.major).join(),
+      studentSchools: data.studentSchools.map((item) => item.school).join(),
+    })
   })
-  .catch((err) => {
-    console.log('error', err)
+});
+
+// POST student data for the first time.
+router.post('/student/profile/edit', function(req, res, next) {
+  updateStudentDataAndReturn(req, res, {
+    successLink: '/student',
+    studentId: req.user.id,
+    failureLink: '/student/profile/edit'
+  })
+});
+
+// GET initial page for first time login.
+router.get('/student/initial', function(req, res, next) {
+  getStudentData(req, res, {
+    renderFile: 'student/profile_edit_initial',
+    studentId: req.user.id
+  }, function(data) {
+    res.render('student/profile_edit_initial', {
+      layout: 'studentLayout',
+      student: data.student,
+      studentMajors: data.studentMajors.map((item) => item.major).join(),
+      studentSchools: data.studentSchools.map((item) => item.school).join(),
+    })
   })
 
+});
+
+// POST student data for the first time.
+router.post('/student/initial', function(req, res, next) {
+  updateStudentDataAndReturn(req, res, {
+    successLink: '/student',
+    studentId: req.user.id,
+    failureLink: '/student/initial'
+  })
 });
 
 router.get('/student/team', function(req, res, next) {
@@ -178,5 +122,190 @@ router.get('/student/teamProfile', function(req, res, next) {
   });
 });
 ///////////////////////////// END OF PRIVATE ROUTES /////////////////////////////
+
+///////////////////////////// HELPER FUNCTIONS //////////////////////////////////
+
+var getStudentData = function(req, res, {
+  studentId: studentId
+}, fn) {
+  var student
+  var studentMajors
+  var studentSchools
+  fetch(callbackURL + '/api/v1/student/' + studentId, {
+    method: 'GET'
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (responseJson.success === true) {
+      student = responseJson.student
+      return ({'success': true})
+    }
+  }).then(() => {
+    return fetch(callbackURL + '/api/v1/student/majors/StudentId/' + studentId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        studentMajors = responseJson.studentMajors
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/student/schools/StudentId/' + studentId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        studentSchools = responseJson.studentSchools
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  }).then(() => {
+    fn( {
+      student: student,
+      studentMajors: studentMajors,
+      studentSchools: studentSchools
+    } )
+    // res.render(renderFile, {
+    //   layout: 'studentLayout',
+    //   student: student,
+    //   studentMajors: studentMajors.map((item) => item.major).join(),
+    //   studentSchools: studentSchools.map((item) => item.school).join(),
+    // })
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
+}
+
+var updateStudentDataAndReturn = function(req, res, {
+  successLink: successLink,
+  studentId: studentId,
+  failureLink: failureLink
+}) {
+
+  fetch(callbackURL + '/api/v1/student/' + studentId, {
+    method: 'PATCH',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phoneNumber: req.body.phoneNumber,
+      skypeUsername: req.body.skypeUsername,
+      typeOfStudent: req.body.typeOfStudent,
+      school: req.body.school,
+      expectedYearOfGraduation: req.body.expectedYearOfGraduation,
+      TeamId: req.body.TeamId
+    })
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (!responseJson.success) {
+      req.flash('error', responseJson.error.errors[0].message);
+      res.redirect(failureLink)
+    }
+    return
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/student/majors/StudentId/' + studentId, {
+      method: 'DELETE',
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (!responseJson.success) {
+        req.flash('error', responseJson.error.errors[0].message);
+        res.redirect(failureLink)
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/student/schools/StudentId/' + studentId, {
+      method: 'DELETE',
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (!responseJson.success) {
+        req.flash('error', responseJson.error.errors[0].message);
+        res.redirect(failureLink)
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+
+    var majorArray = req.body.major.split(',')
+
+    return majorArray.forEach((major) =>
+      fetch(callbackURL + '/api/v1/student/major', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          StudentId: req.user.id,
+          major: major
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!responseJson.success) {
+          req.flash('error', responseJson.error.errors[0].message);
+          res.redirect(failureLink)
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    )
+  })
+  .then(() => {
+    return req.body.school.forEach((school) =>
+      fetch(callbackURL + '/api/v1/student/school', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          StudentId: req.user.id,
+          school: school
+        })
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (!responseJson.success) {
+          req.flash('error', responseJson.error.errors[0].message);
+          res.redirect(failureLink)
+        }
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    )
+  })
+  .then(() => {
+    res.redirect(successLink)
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
+
+}
+
 
 module.exports = router;
