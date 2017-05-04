@@ -25,9 +25,7 @@
       </div>
       <div class="x_content">
 
-        <div class="col-md-4 col-sm-4 col-xs-12">
-          <!-- <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar"> -->
-          <!-- <div style="background-color: red; width: 100%; padding-top: 100%;"></div> -->
+        <!-- <div class="col-md-4 col-sm-4 col-xs-12">
           <h3>{{student.firstName}} {{student.lastName}}</h3>
           <ul class="list-unstyled user_data">
             <li>
@@ -46,12 +44,47 @@
 
         </div>
 
-        <div class="col-md-8 col-sm-8 col-xs-12">
-          <h2>Biography</h2>
-        </p>
-        <p class="text-muted font-13 m-b-30">
-          Hi
-      </div>
+          <div class="col-md-8 col-sm-8 col-xs-12">
+            <h2>Biography</h2>
+          </p>
+          <p class="text-muted font-13 m-b-30">
+            Hi
+        </div> -->
+
+      <div ckass="col-md-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">First Name</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{student.firstName}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Last Name</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{student.lastName}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">Phone Number</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{student.phoneNumber}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="skypeUsername">Skype Username</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{student.skypeUsername}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="typeOfStudent">Level of Study</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{student.typeOfStudent}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">School(s)</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{studentSchools}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="expectedYearOfGraduation">Year of Graduation</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{student.expectedYearOfGraduation}}</p>
+        </div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Major(s)</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p>{{studentMajors}}</p>
+        </div>
+    </div>
 
     </div>
   </div>

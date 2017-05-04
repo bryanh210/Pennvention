@@ -3,7 +3,8 @@ var express = require('express');
 var router  = express.Router();
 
 var fetch = require('node-fetch');
-var callbackURL = "http://localhost:3000" || config.DATABASE_URL || "http://localhost:3000"
+var config = require('../config.js');
+var callbackURL = config.DATABASE_URL || "http://localhost:3000"
 
 // router.use(function(req, res, next){
 //   if (!req.user) { //add middleware to check to see if usertype is student
@@ -23,6 +24,7 @@ router.get('/student', function(req, res, next) {
   }, function(data) {
     res.render('student/profile', {
       layout: 'studentLayout',
+      user: req.user,
       student: data.student,
       studentMajors: data.studentMajors.map((item) => item.major).join(),
       studentSchools: data.studentSchools.map((item) => item.school).join(),
@@ -37,6 +39,7 @@ router.get('/student/profile', function(req, res, next) {
   }, function(data) {
     res.render('student/profile', {
       layout: 'studentLayout',
+      user: req.user,
       student: data.student,
       studentMajors: data.studentMajors.map((item) => item.major).join(),
       studentSchools: data.studentSchools.map((item) => item.school).join(),
@@ -51,6 +54,7 @@ router.get('/student/profile/edit', function(req, res, next) {
   }, function(data) {
     res.render('student/profile_edit', {
       layout: 'studentLayout',
+      user: req.user,
       student: data.student,
       studentMajors: data.studentMajors.map((item) => item.major).join(),
       studentSchools: data.studentSchools.map((item) => item.school).join(),
@@ -75,6 +79,7 @@ router.get('/student/initial', function(req, res, next) {
   }, function(data) {
     res.render('student/profile_edit_initial', {
       layout: 'studentLayout',
+      user: req.user,
       student: data.student,
       studentMajors: data.studentMajors.map((item) => item.major).join(),
       studentSchools: data.studentSchools.map((item) => item.school).join(),
@@ -175,12 +180,6 @@ var getStudentData = function(req, res, {
       studentMajors: studentMajors,
       studentSchools: studentSchools
     } )
-    // res.render(renderFile, {
-    //   layout: 'studentLayout',
-    //   student: student,
-    //   studentMajors: studentMajors.map((item) => item.major).join(),
-    //   studentSchools: studentSchools.map((item) => item.school).join(),
-    // })
   })
   .catch((err) => {
     console.log('error', err)
@@ -307,5 +306,66 @@ var updateStudentDataAndReturn = function(req, res, {
 
 }
 
+var getMentorData = function(req, res, {
+  studentId: studentId
+}, fn) {
+  var student
+  var studentMajors
+  var studentSchools
+  fetch(callbackURL + '/api/v1/student/' + studentId, {
+    method: 'GET'
+  })
+  .then((response) => response.json())
+  .then((responseJson) => {
+    if (responseJson.success === true) {
+      student = responseJson.student
+      return ({'success': true})
+    }
+  }).then(() => {
+    return fetch(callbackURL + '/api/v1/student/majors/StudentId/' + studentId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        studentMajors = responseJson.studentMajors
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  })
+  .then(() => {
+    return fetch(callbackURL + '/api/v1/student/schools/StudentId/' + studentId, {
+      method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.success === true) {
+        studentSchools = responseJson.studentSchools
+        return ({'success': true})
+      }
+    })
+    .catch((err) => {
+      console.log('error', err)
+    })
+  }).then(() => {
+    fn( {
+      student: student,
+      studentMajors: studentMajors,
+      studentSchools: studentSchools
+    } )
+    // res.render(renderFile, {
+    //   layout: 'studentLayout',
+    //   student: student,
+    //   studentMajors: studentMajors.map((item) => item.major).join(),
+    //   studentSchools: studentSchools.map((item) => item.school).join(),
+    // })
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
+}
 
 module.exports = router;
