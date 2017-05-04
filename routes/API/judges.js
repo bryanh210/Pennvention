@@ -21,7 +21,7 @@ router.get('/api/v1/judges', function(req, res) {
 
 // Get properties of one judge by their ID
 router.get('/api/v1/judge/:JudgeId', function(req, res) {
-  models.Judge.findAll({
+  models.Judge.findOne({
     where: {
       id: req.params.JudgeId
     }
@@ -153,7 +153,7 @@ router.get('/api/v1/judges/expertise', function(req, res) {
 
 // Get a expertise by their ID
 router.get('/api/v1/judge/expertise/:JudgeExpertiseId', function(req, res) {
-  models.JudgeExpertise.findAll({
+  models.JudgeExpertise.findOne({
     where: {
       id: req.params.JudgeExpertiseId
     }

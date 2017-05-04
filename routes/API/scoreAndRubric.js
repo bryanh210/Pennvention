@@ -59,7 +59,7 @@ router.get('/api/v1/teamScores/JudgeId/:JudgeId', function(req, res) {
 
 // Get a teamScore by their ID
 router.get('/api/v1/teamScore/:TeamScoreId', function(req, res) {
-  models.TeamScore.findAll({
+  models.TeamScore.findOne({
     where: {
       id: req.params.TeamScoreId
     }
@@ -163,7 +163,7 @@ router.get('/api/v1/rubrics', function(req, res) {
 
 // Get a rubric by their ID
 router.get('/api/v1/rubric/:RubricId', function(req, res) {
-  models.Rubric.findAll({
+  models.Rubric.findOne({
     where: {
       id: req.params.RubricId
     }
@@ -278,7 +278,7 @@ router.get('/api/v1/questions/RubricId/:RubricId', function(req, res) {
 
 // Get a question by their ID
 router.get('/api/v1/question/:QuestionId', function(req, res) {
-  models.Question.findAll({
+  models.Question.findOne({
     where: {
       id: req.params.QuestionId
     }
@@ -399,7 +399,7 @@ router.get('/api/v1/marks/TeamScoreId/:TeamScoreId', function(req, res) {
 
 // Get a mark by their ID
 router.get('/api/v1/mark/:MarkId', function(req, res) {
-  models.Mark.findAll({
+  models.Mark.findOne({
     where: {
       id: req.params.MarkId
     }

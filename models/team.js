@@ -6,11 +6,12 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    name: DataTypes.STRING,
+    teamName: DataTypes.STRING,
     projectName: DataTypes.STRING,
-    projectIdea: DataTypes.TEXT,
+    projectDescription: DataTypes.TEXT,
     deckLink: DataTypes.STRING,
-    videoLink: DataTypes.STRING
+    videoLink: DataTypes.STRING,
+    password: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

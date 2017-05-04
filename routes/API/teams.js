@@ -21,7 +21,7 @@ router.get('/api/v1/teams', function(req, res) {
 
 // Get properties of one team by id
 router.get('/api/v1/team/:TeamId', function(req, res) {
-  models.Team.findAll({
+  models.Team.findOne({
     where: {
       id: req.params.TeamId
     }
@@ -241,7 +241,7 @@ router.get('/api/v1/team/mentorExpertiseRequested/TeamId/:TeamId', function(req,
 
 // Get a mentorExpertiseRequested by their ID
 router.get('/api/v1/team/mentorExpertiseRequested/:TeamMentorExpertiseRequestedId', function(req, res) {
-  models.TeamMentorExpertiseRequested.findAll({
+  models.TeamMentorExpertiseRequested.findOne({
     where: {
       id: req.params.TeamMentorExpertiseRequestedId
     }
@@ -359,7 +359,7 @@ router.get('/api/v1/team/strengths/TeamId/:TeamId', function(req, res) {
 
 // Get a strength by their ID
 router.get('/api/v1/team/strengths/:TeamStrengthId', function(req, res) {
-  models.TeamStrength.findAll({
+  models.TeamStrength.findOne({
     where: {
       id: req.params.TeamStrengthId
     }
@@ -477,7 +477,7 @@ router.get('/api/v1/team/weaknesses/TeamId/:TeamId', function(req, res) {
 
 // Get a weakness by their ID
 router.get('/api/v1/team/weaknesses/:TeamWeaknessId', function(req, res) {
-  models.TeamWeakness.findAll({
+  models.TeamWeakness.findOne({
     where: {
       id: req.params.TeamWeaknessId
     }

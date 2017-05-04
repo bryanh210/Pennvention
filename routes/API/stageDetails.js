@@ -40,7 +40,7 @@ router.get('/api/v1/iteration/competitonPeriod/:competitionPeriod', function(req
 
 // Get an iteration by their ID
 router.get('/api/v1/iteration/:IterationId', function(req, res) {
-  models.Iteration.findAll({
+  models.Iteration.findOne({
     where: {
       id: req.params.IterationId
     }
@@ -158,7 +158,7 @@ router.get('/api/v1/stages/IterationId/:IterationId', function(req, res) {
 
 // Get a stage by their ID
 router.get('/api/v1/stage/:StageId', function(req, res) {
-  models.Stage.findAll({
+  models.Stage.findOne({
     where: {
       id: req.params.StageId
     }
@@ -281,7 +281,7 @@ router.get('/api/v1/qualifyingTeams/StageId/:StageId', function(req, res) {
 
 // Get a qualifying team by their ID
 router.get('/api/v1/qualifyingTeam/:QualifyingTeamId', function(req, res) {
-  models.QualifyingTeam.findAll({
+  models.QualifyingTeam.findOne({
     where:{
       id: req.params.QualifyingTeamId
     }

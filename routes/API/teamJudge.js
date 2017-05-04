@@ -59,7 +59,7 @@ router.get('/api/v1/teams/judge/JudgeId/:JudgeId', function(req, res) {
 
 // Geta teamJudge by their ID
 router.get('/api/v1/team/judge/:TeamJudgeId', function(req, res) {
-  models.TeamJudge.findAll({
+  models.TeamJudge.findOne({
     where: {
       id: req.params.TeamJudgeId
     }

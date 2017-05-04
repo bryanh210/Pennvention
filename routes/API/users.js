@@ -21,7 +21,7 @@ router.get('/api/v1/users', function(req, res) {
 
 // Get properties of one user by their ID
 router.get('/api/v1/user/:UserId', function(req, res) {
-  models.User.findAll({
+  models.User.findOne({
     where: {
       id: req.params.UserId
     }

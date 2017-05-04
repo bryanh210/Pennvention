@@ -22,7 +22,7 @@ router.get('/student', function(req, res, next) {
   getStudentData(req, res, {
     studentId: req.user.id
   }, function(data) {
-    res.render('student/profile', {
+    res.render('student/student_profile', {
       layout: 'studentLayout',
       user: req.user,
       student: data.student,
@@ -37,7 +37,7 @@ router.get('/student/profile', function(req, res, next) {
   getStudentData(req, res, {
     studentId: req.user.id
   }, function(data) {
-    res.render('student/profile', {
+    res.render('student/student_profile', {
       layout: 'studentLayout',
       user: req.user,
       student: data.student,
@@ -52,7 +52,7 @@ router.get('/student/profile/edit', function(req, res, next) {
   getStudentData(req, res, {
     studentId: req.user.id
   }, function(data) {
-    res.render('student/profile_edit', {
+    res.render('student/student_profile_edit', {
       layout: 'studentLayout',
       user: req.user,
       student: data.student,
@@ -74,10 +74,9 @@ router.post('/student/profile/edit', function(req, res, next) {
 // GET initial page for first time login.
 router.get('/student/initial', function(req, res, next) {
   getStudentData(req, res, {
-    renderFile: 'student/profile_edit_initial',
     studentId: req.user.id
   }, function(data) {
-    res.render('student/profile_edit_initial', {
+    res.render('student/student_profile_edit_initial', {
       layout: 'studentLayout',
       user: req.user,
       student: data.student,
@@ -97,14 +96,32 @@ router.post('/student/initial', function(req, res, next) {
   })
 });
 
-router.get('/student/team', function(req, res, next) {
-  res.render('student/team', {
+router.get('/student/team/search', function(req, res, next) {
+  res.render('student/team_search', {
     layout: 'studentLayout'
   });
 });
 
-router.get('/student/team/edit', function(req, res, next) {
+router.get('/student/team/add_members', function(req, res, next) {
+  res.render('student/team_addMembers', {
+    layout: 'studentLayout'
+  });
+});
+
+router.get('/student/team/profile', function(req, res, next) {
+  res.render('student/team_profile', {
+    layout: 'studentLayout'
+  });
+});
+
+router.get('/student/team/profile/edit', function(req, res, next) {
   res.render('student/teamEdit', {
+    layout: 'studentLayout'
+  });
+});
+
+router.get('/student/team/create', function(req, res, next) {
+  res.render('student/team_create', {
     layout: 'studentLayout'
   });
 });

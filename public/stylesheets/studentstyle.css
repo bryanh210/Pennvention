@@ -166,7 +166,12 @@ color: white;
 
 }
 
+/*My CSS*/
+.form-control-hidden {
+  padding-top: 8px;
+}
 
+/*Default CSS*/
 
 .full-width {
 

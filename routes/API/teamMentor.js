@@ -59,7 +59,7 @@ router.get('/api/v1/teams/mentor/MentorId/:MentorId', function(req, res) {
 
 // Get a the team/mentor pairs by their ID
 router.get('/api/v1/teams/mentor/:TeamMentorId', function(req, res) {
-  models.TeamMentor.findAll({
+  models.TeamMentor.findOne({
     where: {
       id: req.params.MentorId
     }

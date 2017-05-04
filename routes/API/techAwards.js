@@ -40,7 +40,7 @@ router.get('/api/v1/techAwards/competitionPeriod/:competitionPeriod', function(r
 
 // Get all the teams with sponsor awards by their id
 router.get('/api/v1/techAwards/:TechAwardId', function(req, res) {
-  models.TechAward.findAll({
+  models.TechAward.findOne({
     where: {
       id: req.params.TechAwardId
     }

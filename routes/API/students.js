@@ -135,7 +135,7 @@ router.get('/api/v1/students/majors', function(req, res) {
 
 // Get a major by their ID
 router.get('/api/v1/student/major/:StudentMajorId', function(req, res) {
-  models.StudentMajor.findAll({
+  models.StudentMajor.findOne({
     where: {
       id: req.params.StudentMajorId
     }
@@ -273,7 +273,7 @@ router.get('/api/v1/students/schools', function(req, res) {
 
 // Get a school by their ID
 router.get('/api/v1/student/school/:StudentSchoolId', function(req, res) {
-  models.StudentSchool.findAll({
+  models.StudentSchool.findOne({
     where: {
       id: req.params.StudentSchoolId
     }

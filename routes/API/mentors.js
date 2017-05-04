@@ -21,7 +21,7 @@ router.get('/api/v1/mentors', function(req, res) {
 
 // Get properties of one mentor by their ID
 router.get('/api/v1/mentor/:MentorId', function(req, res) {
-  models.Mentor.findAll({
+  models.Mentor.findOne({
     where: {
       id: req.params.MentorId
     }
@@ -151,7 +151,7 @@ router.get('/api/v1/mentors/expertise', function(req, res) {
 
 // Get a expertise by their ID
 router.get('/api/v1/mentor/expertise/:MentorExpertiseId', function(req, res) {
-  models.MentorExpertise.findAll({
+  models.MentorExpertise.findOne({
     where: {
       id: req.params.MentorExpertiseId
     }
