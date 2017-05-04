@@ -8,7 +8,7 @@ var callbackURL = config.CALLBACK_URL || process.env.CALLBACK_URL || "http://loc
 
 // router.use(function(req, res, next){
 //   if (!req.user) { //add middleware to check to see if usertype is student
-//     res.redirect('/login');
+//     return res.redirect('/login');
 //   } else {
 //     return next();
 //   }
@@ -188,7 +188,7 @@ router.post('/student/team/create', function(req, res, next) {
       .then((responseJson) => {
         if (!responseJson.success) {
           req.flash('error', responseJson.error.errors[0].message);
-          res.redirect(failureLink)
+          return res.redirect(failureLink)
         }
         return
       })
@@ -210,7 +210,7 @@ router.post('/student/team/create', function(req, res, next) {
           .then((responseJson) => {
             if (!responseJson.success) {
               req.flash('error', responseJson.error.errors[0].message);
-              res.redirect(failureLink)
+              return res.redirect(failureLink)
             }
           })
           .catch((err) => {
@@ -236,7 +236,7 @@ router.post('/student/team/create', function(req, res, next) {
           .then((responseJson) => {
             if (!responseJson.success) {
               req.flash('error', responseJson.error.errors[0].message);
-              res.redirect(failureLink)
+              return res.redirect(failureLink)
             }
           })
           .catch((err) => {
@@ -261,7 +261,7 @@ router.post('/student/team/create', function(req, res, next) {
           .then((responseJson) => {
             if (!responseJson.success) {
               req.flash('error', responseJson.error.errors[0].message);
-              res.redirect(failureLink)
+              return res.redirect(failureLink)
             }
           })
           .catch((err) => {
@@ -270,14 +270,14 @@ router.post('/student/team/create', function(req, res, next) {
         )
       })
       .then(() => {
-        res.redirect('/student/team/profile')
+        return res.redirect('/student/team/profile')
       })
       .catch((err) => {
         console.log('error', err)
       })
 
     } else {
-      res.redirect('/error')
+      return res.redirect('/error')
     }
   })
   .catch((err) => {
@@ -388,7 +388,7 @@ var updateStudentDataAndReturn = function(req, res, {
   .then((responseJson) => {
     if (!responseJson.success) {
       req.flash('error', responseJson.error.errors[0].message);
-      res.redirect(failureLink)
+      return res.redirect(failureLink)
     }
     return
   })
@@ -400,7 +400,7 @@ var updateStudentDataAndReturn = function(req, res, {
     .then((responseJson) => {
       if (!responseJson.success) {
         req.flash('error', responseJson.error.errors[0].message);
-        res.redirect(failureLink)
+        return res.redirect(failureLink)
       }
     })
     .catch((err) => {
@@ -415,7 +415,7 @@ var updateStudentDataAndReturn = function(req, res, {
     .then((responseJson) => {
       if (!responseJson.success) {
         req.flash('error', responseJson.error.errors[0].message);
-        res.redirect(failureLink)
+        return res.redirect(failureLink)
       }
     })
     .catch((err) => {
@@ -441,7 +441,7 @@ var updateStudentDataAndReturn = function(req, res, {
       .then((responseJson) => {
         if (!responseJson.success) {
           req.flash('error', responseJson.error.errors[0].message);
-          res.redirect(failureLink)
+          return res.redirect(failureLink)
         }
       })
       .catch((err) => {
@@ -466,7 +466,7 @@ var updateStudentDataAndReturn = function(req, res, {
       .then((responseJson) => {
         if (!responseJson.success) {
           req.flash('error', responseJson.error.errors[0].message);
-          res.redirect(failureLink)
+          return res.redirect(failureLink)
         }
       })
       .catch((err) => {
@@ -475,7 +475,7 @@ var updateStudentDataAndReturn = function(req, res, {
     )
   })
   .then(() => {
-    res.redirect(successLink)
+    return res.redirect(successLink)
   })
   .catch((err) => {
     console.log('error', err)
@@ -598,7 +598,7 @@ var updateTeamDataAndReturn = function(req, res, {
   .then((responseJson) => {
     if (!responseJson.success) {
       req.flash('error', responseJson.error.errors[0].message);
-      res.redirect(failureLink)
+      return res.redirect(failureLink)
     }
     return
   })
@@ -610,7 +610,7 @@ var updateTeamDataAndReturn = function(req, res, {
     .then((responseJson) => {
       if (!responseJson.success) {
         req.flash('error', responseJson.error.errors[0].message);
-        res.redirect(failureLink)
+        return res.redirect(failureLink)
       }
     })
     .catch((err) => {
@@ -625,7 +625,7 @@ var updateTeamDataAndReturn = function(req, res, {
     .then((responseJson) => {
       if (!responseJson.success) {
         req.flash('error', responseJson.error.errors[0].message);
-        res.redirect(failureLink)
+        return res.redirect(failureLink)
       }
     })
     .catch((err) => {
@@ -640,7 +640,7 @@ var updateTeamDataAndReturn = function(req, res, {
     .then((responseJson) => {
       if (!responseJson.success) {
         req.flash('error', responseJson.error.errors[0].message);
-        res.redirect(failureLink)
+        return res.redirect(failureLink)
       }
     })
     .catch((err) => {
@@ -665,7 +665,7 @@ var updateTeamDataAndReturn = function(req, res, {
       .then((responseJson) => {
         if (!responseJson.success) {
           req.flash('error', responseJson.error.errors[0].message);
-          res.redirect(failureLink)
+          return res.redirect(failureLink)
         }
       })
       .catch((err) => {
@@ -691,7 +691,7 @@ var updateTeamDataAndReturn = function(req, res, {
       .then((responseJson) => {
         if (!responseJson.success) {
           req.flash('error', responseJson.error.errors[0].message);
-          res.redirect(failureLink)
+          return res.redirect(failureLink)
         }
       })
       .catch((err) => {
@@ -716,7 +716,7 @@ var updateTeamDataAndReturn = function(req, res, {
       .then((responseJson) => {
         if (!responseJson.success) {
           req.flash('error', responseJson.error.errors[0].message);
-          res.redirect(failureLink)
+          return res.redirect(failureLink)
         }
       })
       .catch((err) => {
@@ -725,7 +725,7 @@ var updateTeamDataAndReturn = function(req, res, {
     )
   })
   .then(() => {
-    res.redirect(successLink)
+    return res.redirect(successLink)
   })
   .catch((err) => {
     console.log('error', err)

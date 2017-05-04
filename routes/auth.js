@@ -15,7 +15,7 @@ module.exports = function(passport) {
 
   // GET registration page
   router.get('/register', function(req, res) {
-    res.redirect('login')
+    return res.redirect('login')
   });
 
 
@@ -52,9 +52,9 @@ module.exports = function(passport) {
             .then((response) => response.json())
             .then((responseJson) => {
               if (responseJson.success === true) {
-                res.redirect('/student/initial');
+                return res.redirect('/student/initial');
               } else {
-                res.redirect('/error')
+                return res.redirect('/error')
               }
             })
             .catch((err) => {
@@ -62,7 +62,7 @@ module.exports = function(passport) {
             })
 
         } else {
-          res.redirect('/student/profile')
+          return res.redirect('/student/profile')
         }
       })
       .catch((err) => {
@@ -92,9 +92,9 @@ module.exports = function(passport) {
             .then((response) => response.json())
             .then((responseJson) => {
               if (responseJson.success === true) {
-                res.redirect('/judge/judgeForm');
+                return res.redirect('/judge/judgeForm');
               } else {
-                res.redirect('/error')
+                return res.redirect('/error')
               }
             })
             .catch((err) => {
@@ -102,7 +102,7 @@ module.exports = function(passport) {
             })
 
         } else {
-          res.redirect('/judge')
+          return res.redirect('/judge')
         }
       })
       .catch((err) => {
@@ -132,9 +132,9 @@ module.exports = function(passport) {
             .then((response) => response.json())
             .then((responseJson) => {
               if (responseJson.success === true) {
-                res.redirect('/mentor/initial');
+                return res.redirect('/mentor/initial');
               } else {
-                res.redirect('/error')
+                return res.redirect('/error')
               }
             })
             .catch((err) => {
@@ -142,16 +142,16 @@ module.exports = function(passport) {
             })
 
         } else {
-          res.redirect('/mentor/profile')
+          return res.redirect('/mentor/profile')
         }
       })
       .catch((err) => {
         console.log('error')
       })
-      res.redirect('/mentor')
+      return res.redirect('/mentor')
     }
     if (req.user.role === 'admin') {
-      res.redirect('/admin')
+      return res.redirect('/admin')
     }
   });
 
@@ -165,7 +165,7 @@ module.exports = function(passport) {
   // GET Logout page
   router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/login');
+    return res.redirect('/login');
   });
 
   router.post('/register', function(req, res) {
@@ -194,10 +194,10 @@ module.exports = function(passport) {
     .then((response) => response.json())
     .then((responseJson) => {
       if (responseJson.success === true) {
-        res.redirect('/login');
+        return res.redirect('/login');
       } else {
         req.flash('registerError', responseJson.error.errors[0].message);
-        res.redirect('/login#signup')
+        return res.redirect('/login#signup')
       }
     })
     .catch((err) => {
