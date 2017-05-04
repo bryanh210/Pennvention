@@ -32,14 +32,14 @@ module.exports = function(passport) {
   router.get('/redirect', function(req, res) {
     if (req.user.role === 'student') {
 
-      fetch(callbackURL + '/api/v1/student/' + req.user.id, {
+      return fetch(callbackURL + '/api/v1/student/' + req.user.id, {
         method: 'GET'
       })
       .then((response) => response.json())
       .then((responseJson) => {
         if (responseJson.success === false) {
             // If table doesnt exist, create one and redirect to profile page.
-            fetch(callbackURL + '/api/v1/student', {
+            return fetch(callbackURL + '/api/v1/student', {
               method: 'POST',
               headers: {
                 "Content-Type": "application/json"
@@ -72,7 +72,7 @@ module.exports = function(passport) {
     }
     if (req.user.role === 'judge') {
 
-      fetch(callbackURL + '/api/v1/judge/' + req.user.id, {
+      return fetch(callbackURL + '/api/v1/judge/' + req.user.id, {
         method: 'GET'
       })
       .then((response) => response.json())
@@ -112,7 +112,7 @@ module.exports = function(passport) {
     }
     if (req.user.role === 'mentor') {
 
-      fetch(callbackURL + '/api/v1/mentor/' + req.user.id, {
+      return fetch(callbackURL + '/api/v1/mentor/' + req.user.id, {
         method: 'GET'
       })
       .then((response) => response.json())
@@ -179,7 +179,7 @@ module.exports = function(passport) {
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt)
 
-    fetch(callbackURL + '/api/v1/user', {
+    return fetch(callbackURL + '/api/v1/user', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
