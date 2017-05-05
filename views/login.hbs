@@ -31,20 +31,13 @@
 
       <div class="login_wrapper">
         <div class="animate form login_form">
-          {{#if error}}
-          <div class="alert alert-danger">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span>
-            {{error}}
-          </div>
-          {{/if}}
-          <!-- {{#if loginMessage}}
+          {{#if loginMessage}}
           <div class="alert alert-danger">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
             {{loginMessage}}
           </div>
-          {{/if}} -->
+          {{/if}}
           <section class="login_content">
             <form method="post" action="/login" class="loginForm">
               <h1>Login Form</h1>

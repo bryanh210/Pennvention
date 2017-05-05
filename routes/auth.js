@@ -8,8 +8,9 @@ var passport = require('passport');
 var config = require('../config.js');
 var LocalStrategy = require('passport-local').Strategy;
 
-var fetch = require('node-fetch');
-var callbackURL = config.CALLBACK_URL || process.env.CALLBACK_URL || "http://localhost:3000"
+// TODO These will no longer be needed once we refactor the fetch code into sequelize code.
+// var fetch = require('node-fetch');
+// var callbackURL = config.CALLBACK_URL || process.env.CALLBACK_URL || "http://localhost:3000"
 
 module.exports = function(passport) {
 
@@ -21,9 +22,8 @@ module.exports = function(passport) {
 
   // GET Login page
   router.get('/login', function(req, res) {
-    res.render('login', {
-      error: req.flash('error')[0],
-      loginMessage: req.flash('loginError'),
+    return res.render('login', {
+      loginMessage: req.flash('error'),
       registerMessage: req.flash('registerError')
     });
   });
@@ -31,124 +31,28 @@ module.exports = function(passport) {
   // GET Redirect Page - Checks to see what type of user is logged in.
   router.get('/redirect', function(req, res) {
     if (req.user.role === 'student') {
-
-      return fetch(callbackURL + '/api/v1/student/' + req.user.id, {
-        method: 'GET'
+      checkUserRoleAndRedirect(req, res, {
+        userModel: models.Student,
+        createTableRedirectLink: '/student/initial',
+        loginRedirectLink: '/student/profile',
+        errorRedirectLink: '/error'
       })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.success === false) {
-            // If table doesnt exist, create one and redirect to profile page.
-            return fetch(callbackURL + '/api/v1/student', {
-              method: 'POST',
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                id: req.user.id,
-                UserId: req.user.id
-              })
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-              if (responseJson.success === true) {
-                return res.redirect('/student/initial');
-              } else {
-                return res.redirect('/error')
-              }
-            })
-            .catch((err) => {
-              console.log('error', err)
-            })
-
-        } else {
-          return res.redirect('/student/profile')
-        }
-      })
-      .catch((err) => {
-        console.log('error')
-      })
-
     }
     if (req.user.role === 'judge') {
-
-      return fetch(callbackURL + '/api/v1/judge/' + req.user.id, {
-        method: 'GET'
+      checkUserRoleAndRedirect(req, res, {
+        userModel: models.Judge,
+        createTableRedirectLink: '/judge/judgeForm',
+        loginRedirectLink: '/judge',
+        errorRedirectLink: '/error'
       })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.success === false) {
-            // If table doesnt exist, create one and redirect to profile page.
-            fetch(callbackURL + '/api/v1/judge', {
-              method: 'POST',
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                id: req.user.id,
-                UserId: req.user.id
-              })
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-              if (responseJson.success === true) {
-                return res.redirect('/judge/judgeForm');
-              } else {
-                return res.redirect('/error')
-              }
-            })
-            .catch((err) => {
-              console.log('error', err)
-            })
-
-        } else {
-          return res.redirect('/judge')
-        }
-      })
-      .catch((err) => {
-        console.log('error')
-      })
-
     }
     if (req.user.role === 'mentor') {
-
-      return fetch(callbackURL + '/api/v1/mentor/' + req.user.id, {
-        method: 'GET'
+      checkUserRoleAndRedirect(req, res, {
+        userModel: models.Mentor,
+        createTableRedirectLink: '/mentor/mentorForm',
+        loginRedirectLink: '/mentor',
+        errorRedirectLink: '/error'
       })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.success === false) {
-            // If table doesnt exist, create one and redirect to profile page.
-            fetch(callbackURL + '/api/v1/mentor', {
-              method: 'POST',
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                id: req.user.id,
-                UserId: req.user.id
-              })
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {
-              if (responseJson.success === true) {
-                return res.redirect('/mentor/initial');
-              } else {
-                return res.redirect('/error')
-              }
-            })
-            .catch((err) => {
-              console.log('error', err)
-            })
-
-        } else {
-          return res.redirect('/mentor/profile')
-        }
-      })
-      .catch((err) => {
-        console.log('error')
-      })
-      return res.redirect('/mentor')
     }
     if (req.user.role === 'admin') {
       return res.redirect('/admin')
@@ -179,31 +83,49 @@ module.exports = function(passport) {
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt)
 
-    return fetch(callbackURL + '/api/v1/user', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: email,
-        salt: salt,
-        hash: hashedPassword,
-        role: role
-      })
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if (responseJson.success === true) {
-        return res.redirect('/login');
-      } else {
-        req.flash('registerError', responseJson.error.errors[0].message);
-        return res.redirect('/login#signup')
-      }
-    })
-    .catch((err) => {
-      console.log('error', err)
-    })
+    models.User.create({
+      email: email,
+      hash: hashedPassword,
+      salt: salt,
+      role: role
+    }).then(function(user) {
+      return res.redirect('/login');
+    }).catch(function(err) {
+      req.flash('registerError', err.errors[0].message);
+      return res.redirect('/login#signup')
+    });
   });
 
   return router;
 };
+
+///////////////////////////// HELPER FUNCTIONS //////////////////////////////////
+
+var checkUserRoleAndRedirect = function(req, res, {
+  userModel: userModel,
+  createTableRedirectLink: createTableRedirectLink,
+  loginRedirectLink: loginRedirectLink,
+  errorRedirectLink: errorRedirectLink
+}) {
+  models.User.findOne({
+    where: {
+      id: req.params.UserId
+    }
+  }).then(function(user) {
+    if (user) {
+       return res.redirect(loginRedirectLink)
+    }
+    return
+  }).then(() => {
+    return userModel.create({
+      id: req.user.id,
+      UserId: req.user.id,
+    })
+    .then(function(student) {
+      return res.redirect(createTableRedirectLink)
+    })
+  }).catch(function(err) {
+    console.log('ERROR', err)
+    return res.redirect(errorRedirectLink)
+  })
+}
