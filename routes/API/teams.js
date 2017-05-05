@@ -96,7 +96,7 @@ router.patch('/api/v1/team/:TeamId', function(req, res) {
 router.delete('/api/v1/team/:TeamId', function(req, res) {
   models.Team.destroy({
     where: {
-      id: req.params.Teamid
+      id: req.params.TeamId
     }
   }).then(function(team) {
     res.json({

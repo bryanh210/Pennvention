@@ -109,9 +109,10 @@ var checkUserRoleAndRedirect = function(req, res, {
 }) {
   models.User.findOne({
     where: {
-      id: req.params.UserId
+      id: req.user.id
     }
   }).then(function(user) {
+    console.log('WTFSODIJFOISDJFOPSJDOPIFJPSODJFOIJSPDOJFOIJSDPF', user)
     if (user) {
        return res.redirect(loginRedirectLink)
     }
