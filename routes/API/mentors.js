@@ -73,7 +73,7 @@ router.post('/api/v1/mentor/approve/:MentorId', function(req, res) {
     approved: true
   }, {
     where: {
-      MentorId: req.params.MentorId
+      id: req.params.MentorId
     }
   }).then(function(mentor) {
     res.json({
@@ -98,7 +98,7 @@ router.patch('/api/v1/mentor/:MentorId', function(req, res) {
     biography: req.body.biography
   }, {
     where: {
-      MentorId: req.params.MentorId
+      id: req.params.MentorId
     }
   }).then(function(mentor) {
     res.json({
@@ -117,7 +117,7 @@ router.patch('/api/v1/mentor/:MentorId', function(req, res) {
 router.delete('/api/v1/:MentorId', function(req, res) {
   models.Mentor.destroy({
     where: {
-      MentorId: req.params.MentorId
+      id: req.params.MentorId
     }
   }).then(function(mentor) {
     res.json({

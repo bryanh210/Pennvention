@@ -42,7 +42,7 @@ module.exports = function(passport) {
       checkUserRoleAndRedirect(req, res, {
         userModel: models.Judge,
         createTableRedirectLink: '/judge/judgeForm',
-        loginRedirectLink: '/judge',
+        loginRedirectLink: '/judge/judge',
         errorRedirectLink: '/error'
       })
     }
@@ -50,7 +50,7 @@ module.exports = function(passport) {
       checkUserRoleAndRedirect(req, res, {
         userModel: models.Mentor,
         createTableRedirectLink: '/mentor/mentorForm',
-        loginRedirectLink: '/mentor',
+        loginRedirectLink: '/mentor/mentor',
         errorRedirectLink: '/error'
       })
     }

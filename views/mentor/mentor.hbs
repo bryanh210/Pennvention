@@ -1,46 +1,64 @@
-<div class="col-md-12 col-sm-12 col-xs-12">
-  <div class="x_panel">
-
-    <div class="x_title">
-      <h2>Your Profile<small>User profile</small></h2>
-
-      <ul class="nav navbar-right panel_toolbox">
-        <li><a href="/mentor/mentorEdit">Edit</a></li>
-        </li>
-      </ul>
-      <div class="clearfix"></div>
+<div class="container">
+  <div class="row" id="forms">
+    <div class="col-md-12">
+      <h4>Confirmation Status: {{InProgress}}</h4>
     </div>
-    <div class="x_content">
+    <div class="col-md-12">
+      <div class="col-sm-8 col-sm-offset-2">
+        <!--               first name -->
+        <div class="col-sm-3"> <label>First Name: </label></div>
 
-    <div class="col-xs-12">
-      <div class="form-horizontal form-label-left">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstName">First Name</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-          <p class="form-control-hidden" style="border: 0px solid grey">{{mentor.firstName}}</p>
-        </div>
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastName">Last Name</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-          <p class="form-control-hidden">{{mentor.lastName}}</p>
-        </div>
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">Phone Number</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-          <p class="form-control-hidden">{{mentor.phoneNumber}}</p>
-        </div>
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="skypeUsername">Skype Username</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-          <p class="form-control-hidden">{{mentor.skypeUsername}}</p>
-        </div>
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="skypeUsername">Biography</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-          <p class="form-control-hidden">{{mentor.biography}}</p>
-        </div>
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Major(s)</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-          <p class="form-control-hidden">{{studentMajors}}</p>
+        <div class="col-sm-9">
+          <span name="firstName" placeholder="First Name" class="spanStyle">
+            {{mentor.firstName}}
+          </span>
         </div>
       </div>
     </div>
+    <!--         last name -->
+    <div class="col-md-12">
+      <div class="col-sm-8 col-sm-offset-2">
 
+        <div class="col-sm-3"> <label>Last Name: </label> </div>
+        <div class="col-sm-9">
+          <span name="lastName" placeholder="Last Name" class="spanStyle">
+            {{mentor.lastName}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--         Phone Number -->
+    <div class="col-md-12">
+      <div class="col-sm-8 col-sm-offset-2">
+
+        <div class="col-sm-3"> <label>Phone Number: </label> </div>
+        <div class="col-sm-9">
+          <span placeholder="(911)-911-9111" class="spanStyle" >
+            {{mentor.phoneNumber}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--         skype username -->
+    <div class="col-md-12">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-3"><label>Skype Username</label></div>
+        <div class="col-sm-9">
+          <span placeholder="Skype Username" class="spanStyle" >
+            {{mentor.skypeUsername}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!--         bio -->
+    <div class="col-md-12">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-3"> <label>Biography: </label> </div>
+        <div class="col-sm-9">
+          <span name="bio" placeholder="Biography" class="spanStyle" >{{mentor.biography}}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
