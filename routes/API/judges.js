@@ -91,8 +91,6 @@ router.post('/api/v1/judge/approve/:JudgeId', function(req, res) {
 // Update the properties of a judge by their ID
 router.patch('/api/v1/judge/:JudgeId', function(req, res) {
   models.Judge.update({
-    email: req.body.email,
-    password: req.body.password,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     phoneNumber: req.body.phoneNumber,

@@ -24,8 +24,9 @@ var callbackURL =  "http://localhost:3000" || config.CALLBACK_URL || process.env
 // });
 router.get('/mentor', function(req, res, next) {
   getMentorData(req, res, {
-    judgeId: req.user.id
+    mentorId: req.user.id
   }, function(data) {
+    console.log('dataDATA', data);
     res.render('mentor/mentor', {
       layout: 'mentorLayout',
       user: req.user,
@@ -70,7 +71,10 @@ router.post('/mentor/mentorForm', function(req, res, next) {
     })
     .then((response) => response.json())
     .then((responseJson) => {
+      console.log('========== INSIDE OF RESPONSEJSON ===========', responseJson)
       if (responseJson.success === true) {
+       console.log('========== INSIDE OF RESPONSEJSON.success ===========');
+
         res.redirect('/mentor');
       } else {
         req.flash('error', responseJson.error.errors[0].message);
@@ -99,7 +103,7 @@ var getMentorData = function(req, res, {
   var mentor
   var mentorApproval
   var mentorExpertise
-  fetch(callbackURL + '/api/v1/mentor/' + req.user.id, {
+  fetch(callbackURL + '/api/v1/mentor/' + mentorId, {
     method: 'GET',
   })
   .then((response) => response.json())
@@ -125,7 +129,7 @@ var getMentorData = function(req, res, {
       .then((response) => response.json())
       .then((responseJson) => {
         if (reponseJson.success === true) {
-          mentorExpertise = responseJson.mentorExpertiser
+          mentorExpertise = responseJson.mentorExpertise
           return ({'success': true})
         }
       })

@@ -75,7 +75,6 @@ router.get('/judge/judgeEdit', function(req, res, next) {
 });
 
 router.post('/judge/judgeForm', function(req, res, next) {
-  console.log(callbackURL + '/api/v1/judge/' + req.user.id);
   fetch(callbackURL + '/api/v1/judge/' + req.user.id, {
       method: 'PATCH',
       headers: {

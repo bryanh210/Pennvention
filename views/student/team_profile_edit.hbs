@@ -3,7 +3,7 @@
 
     <div class="x_title">
       <div class="text-center">
-        <h1>Create a New Team</h1>
+        <h1>Edit Team</h1>
       </div>
       <ul class="nav navbar-right panel_toolbox">
       </ul>
@@ -43,7 +43,7 @@
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">Project Description</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
-              <textarea name="projectDescription" class="form-control col-md-7 col-xs-12" type="text" value={{team.projectDescription}}></textarea>
+              <textarea name="projectDescription" class="form-control col-md-7 col-xs-12" type="text" value={{team.projectDescription}}>{{team.projectDescription}}</textarea>
             </div>
           </div>
           <div class="form-group">
@@ -92,7 +92,7 @@
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-              <a href="/student/profile" type="button" class="btn btn-primary">Cancel</a>
+              <a href="/student/team/profile" type="button" class="btn btn-primary">Cancel</a>
               <button class="btn btn-primary" type="reset">Reset</button>
               <button type="submit" class="submit btn btn-success">Submit</button>
             </div>

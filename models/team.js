@@ -6,7 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    teamName: DataTypes.STRING,
+    teamName: {
+      type: DataTypes.STRING,
+      unique: 'teamName'
+    },
     projectName: DataTypes.STRING,
     projectDescription: DataTypes.TEXT,
     deckLink: DataTypes.STRING,
@@ -22,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         Team.belongsTo(models.Iteration, {
           onDelete: "CASCADE",
           foreignKey: {
-            allowNull: false
+            allowNull: true //WILL NEED TO FIX THIS LATER WHEN WE IMPLEMENT ITERATIONS
           }
         }),
         Team.hasMany(models.TeamStrength),
