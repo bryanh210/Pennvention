@@ -96,9 +96,27 @@ router.post('/student/initial', function(req, res, next) {
 });
 
 router.get('/student/team/search', function(req, res, next) {
-  // res.render('student/team_search', {
-  //   layout: 'studentLayout'
-  // });
+  getAllTeamData(req, res, function(data) {
+    res.render('student/teams_list', {
+      layout: 'studentLayout',
+      teams: data.teams
+    })
+  })
+});
+
+router.get('/student/team/view/:teamId', function(req, res, next) {
+  getTeamData(req, res, {
+    teamId: req.params.teamId
+  }, function(teamData) {
+    res.render('student/team_profile', {
+      layout: 'studentLayout',
+      team: teamData.team,
+      teamMentorExpertiseRequested: teamData.teamMentorExpertiseRequested.map((item) => item.expertise).join(),
+      teamStrengths: teamData.teamStrengths.map((item) => item.strength).join(),
+      teamWeaknesses: teamData.teamWeaknesses.map((item) => item.weakness).join(),
+      teamStudents: teamData.teamStudents
+    })
+  })
 });
 
 router.get('/student/team/add_members', function(req, res, next) {
@@ -114,7 +132,7 @@ router.get('/student/team/profile', function(req, res, next) {
     getTeamData(req, res, {
       teamId: studentData.student.TeamId
     }, function(teamData) {
-      res.render('student/team_profile', {
+      res.render('student/team_profile_edit', {
         layout: 'studentLayout',
         user: req.user,
         student: studentData.student,
@@ -135,7 +153,6 @@ router.get('/student/team/profile/edit', function(req, res, next) {
     getTeamData(req, res, {
       teamId: studentData.student.TeamId
     }, function(teamData) {
-      console.log('TEAMDATA', teamData)
       res.render('student/team_profile_edit', {
         layout: 'studentLayout',
         user: req.user,
@@ -158,131 +175,8 @@ router.get('/student/team/create', function(req, res, next) {
 
 // POST Create Team -- NEEDS TO BE UPDATED TO REFLECT ITERATIONS AUTOMATICALLY
 router.post('/student/team/create', function(req, res, next) {
-  fetch(callbackURL + '/api/v1/team', {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      teamName: req.body.teamName,
-      projectName: req.body.projectName,
-      projectDescription: req.body.projectDescription,
-      deckLink: req.body.deckLink,
-      videoLink: req.body.videoLink,
-      password: req.body.password,
-      IterationId: req.body.IterationId // WILL NEED TO UPDATE THIS LATER
-    })
-  })
-  .then((response) => response.json())
-  .then((responseJson) => {
-    if (responseJson.success === true) {
-      fetch(callbackURL + '/api/v1/student/' + req.user.id, {
-        method: 'PATCH',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          TeamId: responseJson.team.id
-        })
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (!responseJson.success) {
-          req.flash('error', responseJson.error.errors[0].message);
-          return res.redirect(failureLink)
-        }
-        return
-      })
-      .then(() => {
-        var strengthArray = req.body.strength.split(',')
-
-        return strengthArray.forEach((strength) =>
-          fetch(callbackURL + '/api/v1/team/strength', {
-            method: 'POST',
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              TeamId: responseJson.team.id,
-              strength: strength
-            })
-          })
-          .then((response) => response.json())
-          .then((responseJson) => {
-            if (!responseJson.success) {
-              req.flash('error', responseJson.error.errors[0].message);
-              return res.redirect(failureLink)
-            }
-          })
-          .catch((err) => {
-            console.log('error', err)
-          })
-        )
-      })
-      .then(() => {
-        var weaknessArray = req.body.weakness.split(',')
-
-        return weaknessArray.forEach((weakness) =>
-          fetch(callbackURL + '/api/v1/team/weakness', {
-            method: 'POST',
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              TeamId: responseJson.team.id,
-              weakness: weakness
-            })
-          })
-          .then((response) => response.json())
-          .then((responseJson) => {
-            if (!responseJson.success) {
-              req.flash('error', responseJson.error.errors[0].message);
-              return res.redirect(failureLink)
-            }
-          })
-          .catch((err) => {
-            console.log('error', err)
-          })
-        )
-      })
-      .then(() => {
-        if (!Array.isArray(req.body.expertise)) req.body.expertise = [req.body.expertise]
-        return req.body.expertise.forEach((expertise) =>
-          fetch(callbackURL + '/api/v1/team/mentorExpertiseRequested', {
-            method: 'POST',
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              TeamId: responseJson.team.id,
-              expertise: expertise
-            })
-          })
-          .then((response) => response.json())
-          .then((responseJson) => {
-            if (!responseJson.success) {
-              req.flash('error', responseJson.error.errors[0].message);
-              return res.redirect(failureLink)
-            }
-          })
-          .catch((err) => {
-            console.log('error', err)
-          })
-        )
-      })
-      .then(() => {
-        return res.redirect('/student/team/profile')
-      })
-      .catch((err) => {
-        console.log('error', err)
-      })
-
-    } else {
-      return res.redirect('/error')
-    }
-  })
-  .catch((err) => {
-    console.log('error', err)
+  createTeamAndReturn(req, res, {
+    successLink: '/student/team/profile'
   })
 });
 
@@ -310,9 +204,9 @@ router.get('/student/teamProfile', function(req, res, next) {
 var getStudentData = function(req, res, {
   studentId: studentId
 }, fn) {
-  var student
-  var studentMajors
-  var studentSchools
+  var student;
+  var studentMajors;
+  var studentSchools;
   models.Student.findOne({
     where: {
       id: studentId
@@ -400,14 +294,68 @@ var updateStudentDataAndReturn = function(req, res, {
   })
 }
 
+var createTeamAndReturn = function(req, res, {
+  successLink: successLink,
+}) {
+  var team
+  models.Team.create({
+    teamName: req.body.teamName,
+    projectName: req.body.projectName,
+    projectDescription: req.body.projectDescription,
+    deckLink: req.body.deckLink,
+    videoLink: req.body.videoLink,
+    password: req.body.password,
+    IterationId: req.body.IterationId // WILL NEED TO UPDATE THIS LATER
+  }).then((teamData) => {
+    team = teamData
+  }).then(() => {
+    return models.Student.update({
+      TeamId: team.id
+    }, {
+      where: {
+        id: req.user.id
+      }
+    })
+  }).then(() => {
+    var strengthArray = req.body.strength.split(',')
+    return strengthArray.forEach((strength) =>
+      models.TeamStrength.create({
+        TeamId: team.id,
+        strength: strength
+      })
+    )
+  }).then(() => {
+    var weaknessArray = req.body.weakness.split(',')
+    return weaknessArray.forEach((weakness) =>
+      models.TeamWeakness.create({
+        TeamId: team.id,
+        weakness: weakness
+      })
+    )
+  }).then(() => {
+    if (!Array.isArray(req.body.expertise)) req.body.expertise = [req.body.expertise]
+    return req.body.expertise.forEach((expertise) =>
+      models.TeamMentorExpertiseRequested.create({
+        TeamId: team.id,
+        expertise: expertise
+      })
+    )
+  }).then(() => {
+    return res.redirect('/student/team/profile')
+  })
+  .catch((err) => {
+    console.log('error', err)
+  })
+}
+
 var getTeamData = function(req, res, {
   teamId: teamId
 }, fn) {
-  var team
-  var teamMentorExpertiseRequested
-  var teamStrengths
-  var teamWeaknesses
-  var teamStudents
+  var team;
+  var teamMentorExpertiseRequested;
+  var teamStrengths;
+  var teamWeaknesses;
+  var teamStudents;
 
   models.Team.findOne({
     where: {
@@ -415,8 +363,7 @@ var getTeamData = function(req, res, {
     }
   }).then(function(teamData) {
     team = teamData;
-  })
-  .then(() => {
+  }).then(() => {
     return models.TeamMentorExpertiseRequested.findAll({
       where: {
         TeamId: teamId
@@ -424,8 +371,7 @@ var getTeamData = function(req, res, {
     }).then(function(teamMentorExpertiseRequestedData) {
       teamMentorExpertiseRequested = teamMentorExpertiseRequestedData
     })
-  })
-  .then(() => {
+  }).then(() => {
     return models.TeamStrength.findAll({
       where: {
         TeamId: teamId
@@ -433,8 +379,7 @@ var getTeamData = function(req, res, {
     }).then(function(teamStrengthsData) {
       teamStrengths = teamStrengthsData
     })
-  })
-  .then(() => {
+  }).then(() => {
     return models.TeamWeakness.findAll({
       where: {
         TeamId: teamId
@@ -442,8 +387,7 @@ var getTeamData = function(req, res, {
     }).then(function(teamWeaknessesData) {
       teamWeaknesses = teamWeaknessesData
     })
-  })
-  .then(() => {
+  }).then(() => {
     return models.Student.findAll({
       where: {
         TeamId: teamId
@@ -451,8 +395,7 @@ var getTeamData = function(req, res, {
     }).then(function(studentsData) {
       teamStudents = studentsData
     })
-  })
-  .then(() => {
+  }).then(() => {
     fn( {
       team: team,
       teamMentorExpertiseRequested: teamMentorExpertiseRequested,
@@ -460,6 +403,19 @@ var getTeamData = function(req, res, {
       teamWeaknesses: teamWeaknesses,
       teamStudents: teamStudents
     } )
+  }).catch((err) => {
+    console.log('error', err)
+  })
+}
+
+var getAllTeamData = function(req, res, fn) {
+  var teams;
+  models.Team.findAll().then(function(teamsData) {
+    teams = teamsData;
+  }).then(() => {
+    fn({
+      teams: teams,
+    })
   })
   .catch((err) => {
     console.log('error', err)
@@ -532,65 +488,58 @@ var updateTeamDataAndReturn = function(req, res, {
 }
 
 var getMentorData = function(req, res, {
-  studentId: studentId
+  mentorId: mentorId
 }, fn) {
-  var student
-  var studentMajors
-  var studentSchools
-  fetch(callbackURL + '/api/v1/student/' + studentId, {
-    method: 'GET'
-  })
-  .then((response) => response.json())
-  .then((responseJson) => {
-    if (responseJson.success === true) {
-      student = responseJson.student
-      return ({'success': true})
+  var mentor;
+  var mentorExpertise
+  models.Mentor.findOne({
+    where: {
+      id: mentorId
     }
+  }).then((mentorData) => {
+    mentor = mentorData
   }).then(() => {
-    return fetch(callbackURL + '/api/v1/student/majors/StudentId/' + studentId, {
-      method: 'GET'
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if (responseJson.success === true) {
-        studentMajors = responseJson.studentMajors
-        return ({'success': true})
+    return models.MentorExpertise.findAll({
+      where: {
+        MentorId: mentorId
       }
     })
-    .catch((err) => {
-      console.log('error', err)
-    })
-  })
-  .then(() => {
-    return fetch(callbackURL + '/api/v1/student/schools/StudentId/' + studentId, {
-      method: 'GET'
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if (responseJson.success === true) {
-        studentSchools = responseJson.studentSchools
-        return ({'success': true})
-      }
-    })
-    .catch((err) => {
-      console.log('error', err)
-    })
+  }).then((mentorExpertiseData) => {
+    mentorExpertise = mentorExpertiseData
   }).then(() => {
-    fn( {
-      student: student,
-      studentMajors: studentMajors,
-      studentSchools: studentSchools
-    } )
-    // res.render(renderFile, {
-    //   layout: 'studentLayout',
-    //   student: student,
-    //   studentMajors: studentMajors.map((item) => item.major).join(),
-    //   studentSchools: studentSchools.map((item) => item.school).join(),
-    // })
-  })
-  .catch((err) => {
-    console.log('error', err)
-  })
+    fn({
+      mentor: mentor,
+      mentorExpertise: mentorExpertise
+    })
+  });
 }
+
+var getJudgeData = function(req, res, {
+  judgeId: judgeId
+}, fn) {
+  var judge;
+  var judgeExpertise
+  models.Judge.findOne({
+    where: {
+      id: judgeId
+    }
+  }).then((judgeData) => {
+    judge = judgeData
+  }).then(() => {
+    return models.JudgeExpertise.findAll({
+      where: {
+        JudgeId: judgeId
+      }
+    })
+  }).then((judgeExpertiseData) => {
+    judgeExpertise = judgeExpertiseData
+  }).then(() => {
+    fn({
+      judge: judge,
+      judgeExpertise: judgeExpertise
+    })
+  });
+}
+
 
 module.exports = router;

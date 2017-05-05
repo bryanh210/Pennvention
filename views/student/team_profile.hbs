@@ -1,23 +1,12 @@
-{{#if student.TeamId}}
-{{else}}
-<div class="col-md-12 col-sm-12 col-xs-12">
-  <div class="x_panel">
-    <div class="x_content">
-      <div class="col-xs-12">
-        <h1>You are currently not in a team!</h1>
-        <a href="/student/team/create" class="col-md-6 col-sm-6 col-xs-12">Create a new team</a>
-        <a href="/student/team/searcg" class="col-md-6 col-sm-6 col-xs-12">Join an existing team</a>
-      </div>
-    </div>
-  </div>
-</div>
-{{/if}}
-
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
 
     <div class="x_title">
-      <h2>Your Team Profile<small>Show the team profile.</small></h2>
+      <!-- {{#if user}} -->
+        <h2>Your Team Profile<small>Show the team profile.</small></h2>
+      <!-- {{else}} -->
+        <h2>Team Profile<small>Show the team profile.</small></h2>
+      <!-- {{/if}} -->
 
       <ul class="nav navbar-right panel_toolbox">
         <li><a href="/student/team/profile/edit">Edit</a></li>

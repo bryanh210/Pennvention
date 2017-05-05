@@ -6,7 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    teamName: DataTypes.STRING,
+    teamName: {
+      type: DataTypes.STRING,
+      unique: 'teamName'
+    },
     projectName: DataTypes.STRING,
     projectDescription: DataTypes.TEXT,
     deckLink: DataTypes.STRING,

@@ -6,7 +6,7 @@
       <div class="col-xs-12">
         <h1>You are currently not in a team!</h1>
         <a href="/student/team/create" class="col-md-6 col-sm-6 col-xs-12">Create a new team</a>
-        <a href="/student/team/searcg" class="col-md-6 col-sm-6 col-xs-12">Join an existing team</a>
+        <a href="/student/team/search" class="col-md-6 col-sm-6 col-xs-12">Join an existing team</a>
       </div>
     </div>
   </div>
@@ -62,9 +62,9 @@
           <p class="form-control-hidden">{{studentMajors}}</p>
         </div>
         {{#if student.TeamId}}
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Major(s)</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="school">Team</label>
           <div class="col-md-9 col-sm-9 col-xs-12">
-            <p class="form-control-hidden">{{student.TeamId}}</p>
+            <p class="form-control-hidden"><a href="/student/team/{{student.TeamId}}">{{student.TeamId}}</a></p>
           </div>
         {{else}}
         {{/if}}
