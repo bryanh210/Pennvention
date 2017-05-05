@@ -7,7 +7,10 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     approved: DataTypes.BOOLEAN,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
+    skypeUsername: DataTypes.STRING,
     biography: DataTypes.TEXT
   }, {
     classMethods: {
