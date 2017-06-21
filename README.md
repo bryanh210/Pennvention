@@ -1,3 +1,6 @@
+#Pennvention
+Database for developing UPenn's Pennvention platform
+
 # express-passport-postgres
 - ```npm dev``` to run the app
 - was created to separate from express-postgres which has the routes but didn't have the best boilerplate or routes. Was best to start with an ```express -f``` and not have to refactor everything.
