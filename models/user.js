@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     hash: DataTypes.STRING,
     salt: DataTypes.STRING,
     role: {
+      //ENUM = data type
       type: DataTypes.ENUM('student', 'judge', 'mentor', 'admin'),
       allowNull: false,
       // type: DataTypes.STRING
